@@ -1,0 +1,295 @@
+Richard Papalia, Bryan Nguyen Jack Wanke
+1. The user agent that is used by default is "curl/7.43.0"
+2. The youtube site was the on that changed when I added the -A flag.
+
+Here is a transcript of my curl requests. So it is more readable here is an example of my pattern for request:
+Richards-MBP:~ richardpapalia$ curl google.com -v
+* Rebuilt URL to: google.com/
+*   Trying 216.58.194.174...
+* Connected to google.com (216.58.194.174) port 80 (#0)
+> GET / HTTP/1.1
+> Host: google.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: http://www.google.com/
+< Content-Type: text/html; charset=UTF-8
+< Date: Wed, 08 Feb 2017 20:46:19 GMT
+< Expires: Fri, 10 Mar 2017 20:46:19 GMT
+< Cache-Control: public, max-age=2592000
+< Server: gws
+< Content-Length: 219
+< X-XSS-Protection: 1; mode=block
+< X-Frame-Options: SAMEORIGIN
+< 
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+* Connection #0 to host google.com left intact
+Richards-MBP:~ richardpapalia$ 
+Richards-MBP:~ richardpapalia$ 
+Richards-MBP:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" google.com -v
+* Rebuilt URL to: google.com/
+*   Trying 216.58.194.174...
+* Connected to google.com (216.58.194.174) port 80 (#0)
+> GET / HTTP/1.1
+> Host: google.com
+> User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: http://www.google.com/
+< Content-Type: text/html; charset=UTF-8
+< Date: Wed, 08 Feb 2017 20:46:36 GMT
+< Expires: Fri, 10 Mar 2017 20:46:36 GMT
+< Cache-Control: public, max-age=2592000
+< Server: gws
+< Content-Length: 219
+< X-XSS-Protection: 1; mode=block
+< X-Frame-Options: SAMEORIGIN
+< 
+<HTML><HEAD><meta http-equiv="content-type" content="text/html;charset=utf-8">
+<TITLE>301 Moved</TITLE></HEAD><BODY>
+<H1>301 Moved</H1>
+The document has moved
+<A HREF="http://www.google.com/">here</A>.
+</BODY></HTML>
+* Connection #0 to host google.com left intact
+Richards-MBP:~ richardpapalia$ curl facebook.com -v
+* Rebuilt URL to: facebook.com/
+*   Trying 31.13.77.36...
+*   Trying 2a03:2880:f122:83:face:b00c::25de...
+* Immediate connect fail for 2a03:2880:f122:83:face:b00c::25de: No route to host
+* Connected to facebook.com (31.13.77.36) port 80 (#0)
+> GET / HTTP/1.1
+> Host: facebook.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: https://facebook.com/
+< Content-Type: text/html
+< X-FB-Debug: /AuRgmDdMouqouZjTqANShK1Zth95n6OjT9MbZGQ+tQLuguVyTZCnsuV/36vs4j7e7zX1CJDdp0/s/1E/JCHVw==
+< Date: Wed, 08 Feb 2017 20:46:46 GMT
+< Connection: keep-alive
+< Content-Length: 0
+< 
+* Connection #0 to host facebook.com left intact
+Richards-MBP:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" facebook.com -v
+* Rebuilt URL to: facebook.com/
+*   Trying 31.13.77.36...
+*   Trying 2a03:2880:f122:83:face:b00c::25de...
+* Immediate connect fail for 2a03:2880:f122:83:face:b00c::25de: No route to host
+* Connected to facebook.com (31.13.77.36) port 80 (#0)
+> GET / HTTP/1.1
+> Host: facebook.com
+> User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: https://facebook.com/
+< Content-Type: text/html
+< X-FB-Debug: JphKDY1xMvwT9Zf7tMLxRaZvkC4AIzPRlc+BTT3KIjBwkizMP6EWzLc/ccglXuRpACrtG+dC4zSfQ4OXjSCaZg==
+< Date: Wed, 08 Feb 2017 20:46:58 GMT
+< Connection: keep-alive
+< Content-Length: 0
+< 
+* Connection #0 to host facebook.com left intact
+Richards-MBP:~ richardpapalia$ curl wikipedia.com -v
+* Rebuilt URL to: wikipedia.com/
+*   Trying 198.35.26.96...
+* Connected to wikipedia.com (198.35.26.96) port 80 (#0)
+> GET / HTTP/1.1
+> Host: wikipedia.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Date: Thu, 02 Feb 2017 14:17:26 GMT
+< Server: mw1173.eqiad.wmnet
+< Location: http://www.wikipedia.org/
+< Cache-Control: max-age=2592000
+< Expires: Sat, 04 Mar 2017 14:17:26 GMT
+< Content-Type: text/html; charset=iso-8859-1
+< Vary: X-Forwarded-Proto, Accept-Encoding
+< X-Varnish: 723118795 422914679, 364627035 2296298, 735261265 318505465, 601048327 451449286
+< Via: 1.1 varnish-v4, 1.1 varnish-v4, 1.1 varnish-v4, 1.1 varnish-v4
+< Age: 541783
+< X-Cache: cp1054 hit/35, cp2016 hit/8, cp4018 hit/7, cp4008 hit/495
+< X-Cache-Status: hit
+< Set-Cookie: WMF-Last-Access=08-Feb-2017;Path=/;HttpOnly;secure;Expires=Sun, 12 Mar 2017 12:00:00 GMT
+< X-Analytics: nocookies=1
+< X-Client-IP: 50.76.45.78
+< Set-Cookie: GeoIP=US:CA:San_Jose:37.34:-121.89:v4; Path=/; secure; Domain=.wikipedia.com
+< Content-Length: 233
+< Connection: keep-alive
+< 
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.wikipedia.org/">here</a>.</p>
+</body></html>
+* Connection #0 to host wikipedia.com left intact
+Richards-MBP:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" wikipedia.com -v
+* Rebuilt URL to: wikipedia.com/
+*   Trying 198.35.26.96...
+*   Trying 2620:0:863:ed1a::1...
+* Immediate connect fail for 2620:0:863:ed1a::1: No route to host
+* Connected to wikipedia.com (198.35.26.96) port 80 (#0)
+> GET / HTTP/1.1
+> Host: wikipedia.com
+> User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Date: Thu, 02 Feb 2017 14:17:26 GMT
+< Server: mw1173.eqiad.wmnet
+< Location: http://www.wikipedia.org/
+< Cache-Control: max-age=2592000
+< Expires: Sat, 04 Mar 2017 14:17:26 GMT
+< Content-Type: text/html; charset=iso-8859-1
+< Vary: X-Forwarded-Proto, Accept-Encoding
+< X-Varnish: 723118795 422914679, 364627035 2296298, 735261265 318505465, 593917655 451449286
+< Via: 1.1 varnish-v4, 1.1 varnish-v4, 1.1 varnish-v4, 1.1 varnish-v4
+< Age: 541793
+< X-Cache: cp1054 hit/35, cp2016 hit/8, cp4018 hit/7, cp4008 hit/496
+< X-Cache-Status: hit
+< Set-Cookie: WMF-Last-Access=08-Feb-2017;Path=/;HttpOnly;secure;Expires=Sun, 12 Mar 2017 12:00:00 GMT
+< X-Analytics: nocookies=1
+< X-Client-IP: 50.76.45.78
+< Set-Cookie: GeoIP=US:CA:San_Jose:37.34:-121.89:v4; Path=/; secure; Domain=.wikipedia.com
+< Content-Length: 233
+< Connection: keep-alive
+< 
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.wikipedia.org/">here</a>.</p>
+</body></html>
+* Connection #0 to host wikipedia.com left intact
+Richards-MBP:~ richardpapalia$ curl youtube.com -v
+* Rebuilt URL to: youtube.com/
+*   Trying 216.58.194.174...
+*   Trying 2607:f8b0:4005:804::200e...
+* Immediate connect fail for 2607:f8b0:4005:804::200e: No route to host
+* Connected to youtube.com (216.58.194.174) port 80 (#0)
+> GET / HTTP/1.1
+> Host: youtube.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> 
+< HTTP/1.1 301 Moved Permanently
+< Location: http://www.youtube.com/
+< Content-Length: 0
+< Date: Wed, 08 Feb 2017 20:47:27 GMT
+< Content-Type: text/html
+< Server: YouTubeFrontEnd
+< X-XSS-Protection: 1; mode=block
+< X-Frame-Options: SAMEORIGIN
+< 
+* Connection #0 to host youtube.com left intact
+Richards-MBP:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" yotube.com -v
+* Rebuilt URL to: yotube.com/
+*   Trying 5.39.99.52...
+* Connected to yotube.com (5.39.99.52) port 80 (#0)
+> GET / HTTP/1.1
+> Host: yotube.com
+> User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
+> Accept: */*
+> 
+< HTTP/1.1 302 Found
+< Server: nginx
+< Date: Wed, 08 Feb 2017 20:47:38 GMT
+< Content-Length: 11
+< Connection: keep-alive
+< set-cookie: sid=d352d0de-ee3f-11e6-9c63-8b6845011cf0; path=/; domain=yotube.com; HttpOnly
+< cache-control: max-age=0, private, must-revalidate
+< location: http://api.quotes.com/d35871d8-ee3f-11e6-9c63-31cc1b046570
+< 
+* Connection #0 to host yotube.com left intact
+RedirectingRichards-MBP:~ richardpapalia$ curl yahoo.com -v
+* Rebuilt URL to: yahoo.com/
+*   Trying 98.138.253.109...
+*   Trying 2001:4998:58:c02::a9...
+* Immediate connect fail for 2001:4998:58:c02::a9: No route to host
+*   Trying 2001:4998:c:a06::2:4008...
+* Immediate connect fail for 2001:4998:c:a06::2:4008: No route to host
+*   Trying 2001:4998:44:204::a7...
+* Immediate connect fail for 2001:4998:44:204::a7: No route to host
+* Connected to yahoo.com (98.138.253.109) port 80 (#0)
+> GET / HTTP/1.1
+> Host: yahoo.com
+> User-Agent: curl/7.43.0
+> Accept: */*
+> 
+< HTTP/1.1 301 Redirect
+< Date: Wed, 08 Feb 2017 20:47:45 GMT
+< Via: https/1.1 ir1.fp.ne1.yahoo.com (ApacheTrafficServer)
+< Server: ATS
+< Location: https://www.yahoo.com/
+< Content-Type: text/html
+< Content-Language: en
+< Cache-Control: no-store, no-cache
+< Connection: keep-alive
+< Content-Length: 304
+< 
+<HTML>
+<HEAD>
+<TITLE>Document Has Moved</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="white" FGCOLOR="black">
+<H1>Document Has Moved</H1>
+<HR>
+
+<FONT FACE="Helvetica,Arial"><B>
+Description: The document you requested has moved to a new location.  The new location is "https://www.yahoo.com/".
+</B></FONT>
+<HR>
+</BODY>
+* Connection #0 to host yahoo.com left intact
+Richards-MBP:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" yahoo.com -v
+* Rebuilt URL to: yahoo.com/
+*   Trying 98.139.183.24...
+* Connected to yahoo.com (98.139.183.24) port 80 (#0)
+> GET / HTTP/1.1
+> Host: yahoo.com
+> User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
+> Accept: */*
+> 
+< HTTP/1.1 301 Redirect
+< Date: Wed, 08 Feb 2017 20:47:53 GMT
+< Via: https/1.1 ir14.fp.bf1.yahoo.com (ApacheTrafficServer)
+< Server: ATS
+< Location: https://www.yahoo.com/
+< Content-Type: text/html
+< Content-Language: en
+< Cache-Control: no-store, no-cache
+< Connection: keep-alive
+< Set-Cookie: B=237o369c9n0vp&b=3&s=au; expires=Thu, 08-Feb-2018 20:47:53 GMT; path=/; domain=.yahoo.com
+< Content-Length: 304
+< 
+<HTML>
+<HEAD>
+<TITLE>Document Has Moved</TITLE>
+</HEAD>
+
+<BODY BGCOLOR="white" FGCOLOR="black">
+<H1>Document Has Moved</H1>
+<HR>
+
+<FONT FACE="Helvetica,Arial"><B>
+Description: The document you requested has moved to a new location.  The new location is "https://www.yahoo.com/".
+</B></FONT>
+<HR>
+</BODY>
+* Connection #0 to host yahoo.com left intact
+Richards-MBP:~ richardpapalia$ 
