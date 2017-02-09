@@ -1,6 +1,6 @@
 # CS174 HW1
 
-<pre>
+<code>
 In-Class Demo: Before or on the homework due date, each student needs to show me on their laptop that they have installed Apache, PHP, and Mysql or MariaDB. If you decide, as I suggest, to install XAMPP to get stuff running, then I will test that your installation is working by going to the phpMyAdmin page. This portion of the homework must be demo'd individually to receive points, not as a group. The remainder of the assignment can be done in a group.
 
 Experiments:
@@ -20,5 +20,5 @@ Your page should have at least two <a> tags to two other HTML 5 validating pages
 Your page should have at least one <img> tag that correctly loads a png image that you include in your Hw1.zip folder. The src attribute of this tag should use a relative path.
 
 Your page should at least once constructively use the following tags: <ul>, <table>, <span>. You can use the span tag for example to give a tooltip for some item on the page.
-</pre>
+</code>
 
