@@ -1,6 +1,5 @@
 # CS174 HW1
 
-<code>
 In-Class Demo: Before or on the homework due date, each student needs to show me on their laptop that they have installed Apache, PHP, and Mysql or MariaDB. If you decide, as I suggest, to install XAMPP to get stuff running, then I will test that your installation is working by going to the phpMyAdmin page. This portion of the homework must be demo'd individually to receive points, not as a group. The remainder of the assignment can be done in a group.
 
 Experiments:
@@ -13,12 +12,11 @@ In a shell, using curl, download the Facebook, Google, Wikipedia, Yahoo, Youtube
 Pick four response headers that were received while doing the experiment above, and which we have not discussed in class. For each of them, find out what they are for, write up these headers and what they are for in the file headers.txt which you include in your Hw1.zip file.
 
 Web Pages: Make a HTML 5 validating, web page with title Computer Science Department, SJSU 2067 that represents how you think the CS Departments web page will look like in 2067. Here are some additional requirements of this page:
-Your page should use a <link> tag to specify a favicon. You should include this icon in your Hw1.zip folder.
+Your page should use a &lt;link&gt; tag to specify a favicon. You should include this icon in your Hw1.zip folder.
 
-Your page should have at least two <a> tags to two other HTML 5 validating pages you create. The href attributes in these tags should use relative paths so it doesn't matter what folder your page is served from.
+Your page should have at least two &lt;a&gt; tags to two other HTML 5 validating pages you create. The href attributes in these tags should use relative paths so it doesn't matter what folder your page is served from.
 
-Your page should have at least one <img> tag that correctly loads a png image that you include in your Hw1.zip folder. The src attribute of this tag should use a relative path.
+Your page should have at least one &lt;img&gt; tag that correctly loads a png image that you include in your Hw1.zip folder. The src attribute of this tag should use a relative path.
 
-Your page should at least once constructively use the following tags: <ul>, <table>, <span>. You can use the span tag for example to give a tooltip for some item on the page.
-</code>
+Your page should at least once constructively use the following tags: &lt;ul&gt;, &lt;table&gt;, &lt;span&gt;. You can use the span tag for example to give a tooltip for some item on the page.
 
