@@ -1,3 +1,5 @@
+<h1> CS174 Project Folder: Bryan Nguyen, Jack Wanke, Richard Papalia</h1>
+
 The greatest code of all time
 
 Git Commands:
