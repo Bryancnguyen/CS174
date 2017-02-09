@@ -1,0 +1,21 @@
+headers.txt
+
+1) Cache-Control: private, no-cache, no-store, must-revalidate (from http response Facebook sent) 
+	- cache-control headers are used to control the caching mechanisms for http requests and reponses. 
+	- this header can be used to specify the whether or not the client or server caches, and the expiration dates on the potential caches.
+	- this header can also be used to specify revalidation restrictions for caches
+
+2) Transfer-Encoding: chunked (from http response Google sent)
+	- transfer-encoding header is used to describe the method of encoding used to transfer the content to the user.
+	- there are several encodings, but in the case of 'chunked' the response is sent over in a series of chunks, with messages containing the size to allow the recipient to know when they've received a wholesome response.
+
+3) P3P: policyref="https://policies.yahoo.com/w3c/p3p.xml", CP="CAO DSP COR CUR ADM DEV TAI PSA PSD IVAi IVDi CONi TELo OTPi OUR DELi SAMi OTRi UNRi PUBi IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC GOV" (from http response Yahoo sent)
+	- P3P header specifies information about the P3P protocol itself.
+	- P3P protocol is used by websites to describe their use of data collected about web browsers and their users.
+
+4) ETag: W/"13e41-5454975c08373" (from http response Wikipedia sent) 
+	- ETag header is used to validate web caches.
+	- the ETag allows the server to send content conditionally, based on whether the user's cached content is valid or not.
+	- the ETag header is verified by the server; if the server successfully verifies the header, page content can be rendered from the user's cache
+	- the ETag saves bandwidth and increases response time by allowing the server to reduce the size of the response
+
