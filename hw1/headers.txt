@@ -1,4 +1,4 @@
-headers.txt
+headers.txt: Jack Wanke, Bryan Nguyen, Richard Papalia
 
 1) Cache-Control: private, no-cache, no-store, must-revalidate (from http response Facebook sent) 
 	- cache-control headers are used to control the caching mechanisms for http requests and reponses. 
