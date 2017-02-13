@@ -86,6 +86,7 @@ table {
   width: 30%;
   margin: 0px auto;
   display: block;
+  padding-bottom: 40px;
 }
 
 table th {
@@ -101,7 +102,6 @@ table td {
 }
 
 footer{
-  position:absolute;
   bottom:0;
   background-color: #444;
   padding:20px 0;
