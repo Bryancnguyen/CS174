@@ -1,8 +1,12 @@
 Richard Papalia, Bryan Nguyen Jack Wanke
 1. The user agent that is used by default is "curl/7.43.0"
-2. The youtube site was the on that changed when I added the -A flag.
+2. Aside from the different user-agent tags, the changes that resulted in using my phone’s user agent were as follows:
+- For Facebook, the “X-FB-Debug:” header had different values for the mobile user agent vs computer user agent
+- For wikipedia, the “X-Varnish” tag had slightly different information for the two requests. This may have simply been due to the fact that the time was different.
+- For Yahoo, I was connected to different IP addresses using the different user-agent tags.
 
-Here is a transcript of my curl requests. So it is more readable here is an example of my pattern for request:
+
+Here is a transcript of my curl requests.
 Richards-MBP:~ richardpapalia$ curl google.com -v
 * Rebuilt URL to: google.com/
 *   Trying 216.58.194.174...
@@ -196,25 +200,25 @@ Richards-MBP:~ richardpapalia$ curl youtube.com -v
 < X-Frame-Options: SAMEORIGIN
 < 
 * Connection #0 to host youtube.com left intact
-Richards-MBP:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" yotube.com -v
-* Rebuilt URL to: yotube.com/
-*   Trying 5.39.99.52...
-* Connected to yotube.com (5.39.99.52) port 80 (#0)
+Richards-MacBook-Pro:~ richardpapalia$ curl -A "Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1" youtube.com -v
+* Rebuilt URL to: youtube.com/
+*   Trying 216.58.194.174...
+* Connected to youtube.com (216.58.194.174) port 80 (#0)
 > GET / HTTP/1.1
-> Host: yotube.com
+> Host: youtube.com
 > User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
 > Accept: */*
 > 
-< HTTP/1.1 302 Found
-< Server: nginx
-< Date: Wed, 08 Feb 2017 20:47:38 GMT
-< Content-Length: 11
-< Connection: keep-alive
-< set-cookie: sid=d352d0de-ee3f-11e6-9c63-8b6845011cf0; path=/; domain=yotube.com; HttpOnly
-< cache-control: max-age=0, private, must-revalidate
-< location: http://api.quotes.com/d35871d8-ee3f-11e6-9c63-31cc1b046570
+< HTTP/1.1 301 Moved Permanently
+< Content-Length: 0
+< Location: http://www.youtube.com/
+< Date: Mon, 13 Feb 2017 23:49:29 GMT
+< Content-Type: text/html
+< Server: YouTubeFrontEnd
+< X-XSS-Protection: 1; mode=block
+< X-Frame-Options: SAMEORIGIN
 < 
-* Connection #0 to host yotube.com left intact
+* Connection #0 to host youtube.com left intact
 RedirectingRichards-MBP:~ richardpapalia$ curl yahoo.com -v
 * Rebuilt URL to: yahoo.com/
 *   Trying 98.138.253.109...
