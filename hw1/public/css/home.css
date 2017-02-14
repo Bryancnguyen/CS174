@@ -1,0 +1,28 @@
+.home-page
+{
+  height: 800px;
+}
+
+.devices img {
+  width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+.welcome-message
+{
+  margin: 0px auto;
+  display: block;
+  width: 80px;
+}
+
+table {
+  padding-top: 30px;
+  width: 30%;
+  margin: 0px auto;
+  display: block;
+  padding-bottom: 40px;
+}
+
+table th {
+  color:#2c3e50;
+}
