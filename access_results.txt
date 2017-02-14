@@ -1,0 +1,12 @@
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/ HTTP/1.1" 200 6900
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/javascripts/modernizr.js HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/images/bitnami-xampp.png HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/stylesheets/normalize.css HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/images/xampp-logo.svg HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/stylesheets/all.css HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/javascripts/all.js HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/images/fastly-logo.png HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:08 -0800] "GET /dashboard/images/social-icons@2x.png HTTP/1.1" 304 -
+192.168.1.97 - - [08/Feb/2017:12:11:08 -0800] "GET /dashboard/images/fastly-logo@2x.png HTTP/1.1" 304 -
+
+THE USER AGENT STRING WAS Mozilla/5.0 (iPhone; CPU iPhone OS 10_2_1 like Mac OS X) AppleWebKit/602.4.6 (KHTML, like Gecko) Version/10.0 Mobile/14D27 Safari/602.1
