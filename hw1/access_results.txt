@@ -1,3 +1,4 @@
+Richard Papalia, Bryan Nguyen, Jack Wanke
 192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/ HTTP/1.1" 200 6900
 192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/javascripts/modernizr.js HTTP/1.1" 304 -
 192.168.1.97 - - [08/Feb/2017:12:11:05 -0800] "GET /dashboard/images/bitnami-xampp.png HTTP/1.1" 304 -
