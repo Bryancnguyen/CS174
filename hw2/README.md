@@ -1,4 +1,4 @@
-- [x] Your Hw2.zip folder should have a readme.txt file with all the names and ids for your group.
+- [] Your Hw2.zip folder should have a readme.txt file with all the names and ids for your group.
 - [] All pages produced by your app should be valid XHTML 5.
 - [] Your app should work regardless of what folder under DOCUMENT_ROOT the grader chooses to grade it. If you have variables/constants that need to be set to ensure this, they should be in a file config.php which is require_once'd by your index.php file.
 - [] All urls used by your app (for links, form data, etc) should be of one of the following forms:
