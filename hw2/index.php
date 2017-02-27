@@ -116,4 +116,3 @@ function editFile($filename){
 	</html>
 	<?php
 }
-
