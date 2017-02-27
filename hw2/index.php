@@ -1,51 +1,5 @@
 <?php
 
-if (isset($_GET['a']) && isset($_GET['file'])){
-	$action = $_GET['a'];
-	$file = $_GET['file'];
-	//echo "Our action is " . $action;
-	if($action == "edit"){
-		editFile($file);
-	}
-	if($action == 'read'){
-		displayFile($file);
-	}
-	if($action == 'confirm'){
-		confirmDelete($file);
-	}
-}
-else{
-	displayIndex();
-}
-
-function getFiles(){
-	return glob("*.txt");
-}
-
-function displayIndex(){
-	?>
-	<html>
-		<head>
-		<title>My PHP Text Editor</title>
-		</head>
-		<body>
-		<form id="readForm" action="/index.php?a=read&file=<?= $filename ?>" method="get">
-		</form>
-		<?php 
-		$myfiles = getFiles();
-		foreach ($myfiles as $txtFile) { 
-			?> 
-			<button class="readButton" type="text" name="a" form="readForm" value="Submit">Read</button>
-			<button class="delButton" type="text" name="a" form="readForm" value="Submit">Delete</button>
-			<?php
-			echo $txtFile . "/index.php?a=read&file=" . $txtFile
-		}
-		?>
-		</body>
-	</html>
-	<?php
-}
-
 function displayFile($filename){
 	?>
 	<html>
@@ -53,12 +7,83 @@ function displayFile($filename){
 		<title>My PHP Text Editor</title>
 		</head>
 		<body>
-			<p>
+			<?php echo "File: $filename"; ?>
+			<p class="filetext">
 				<?= file_get_contents($filename);?>
 			</p>
 		</body>
 	</html>
 	<?php
+}
+
+
+function displayIndex(){
+	?>
+	<html>
+		<head>
+			<title>My PHP Text Editor</title>
+		</head>
+		<body>
+			<h1>Simple Text Editor</h1>
+			<form class="createform" action="/index.php" method="get">
+	 			<input type="hidden" name="file" value="<?= $filename ?>">
+	 			<input type="hidden" name="a" value="create">
+	 			<button class="createButton" type="Submit">Create A New File</button>
+	 		</form>
+			<h2>My Files</h2>
+			<table>
+			<tr><th>Filename</th><th colspan="2">Action</th></tr>
+			<?php 
+			$myfiles = getFiles();
+			foreach ($myfiles as $txtFile) { 
+				?>
+				 <tr>
+				 	<td><?= $txtFile ?></td>
+				 	<td>
+				 		<form class="indexform" action="/testing/index.php" method="get">
+				 			<input type="hidden" name="file" value="<?= $txtFile ?>">
+				 			<input type="hidden" name="a" value="read">
+				 			<button class="readButton" type="Submit" value="read">Read</button>
+				 		</form>
+				 	</td>
+				 	<td>
+				 		<form class="indexform" action="/index.php" method="get">
+				 			<input type="hidden" name="file" value="<?= $txtFile ?>">
+				 			<input type="hidden" name="a" value="delete">
+				 			<button class="deleteButton" type="Submit" value="delete">Delete</button>
+				 		</form>
+				 	</td>
+				 </tr>
+				<?php
+			}
+			?>
+			</table>
+		</body>
+	</html>
+	<?php
+}
+
+
+if (isset($_GET['a']) && isset($_GET['file'])){
+	$action = $_GET['a'];
+	$file = $_GET['file'];
+	//echo "Our action is " . $action;
+	// if($action == "edit"){
+	// 	editFile($file);
+	// }
+	if($action == 'read'){
+		displayFile($file);
+	}
+	// if($action == 'confirm'){
+	// 	confirmDelete($file);
+	// }
+}
+else{
+	displayIndex();
+}
+
+function getFiles(){
+	return glob("*.txt");
 }
 
 function confirmDelete($filename){
