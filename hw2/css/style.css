@@ -1,0 +1,202 @@
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    padding: 40px;
+}
+h2 {
+  color: #2c3e50;
+  padding: 20px 0px 20px 30px;
+}
+h1 a {
+  text-decoration: none;
+}
+h1 a:visited {
+  color: #2c3e50;
+}
+h1 a:hover, h1 a:focus,h1 a:active {
+  color: #2980b9;
+}
+body {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+
+  background-color: #ecf0f1;
+    font-family: "Consolas", "Menlo", "Courier", monospace;
+
+}
+
+*, body {
+  margin: 0px;
+  padding: 0px;
+}
+
+#container{
+  height: 300px;
+  width: 500px;
+  margin: 0 auto;
+  display: block;
+}
+
+.form-control {
+    padding: 10px 10px;
+    font-size: 1rem;
+    color: #464a4c;
+    background-color: #fff;
+    background-image: none;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+}
+
+#container button {
+  background-color: #2c3e50;
+  border: none;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.16), 0 2px 4px rgba(0, 0, 0, 0.26);
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  height: 30px;
+  padding: 0 15px;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  transition: box-shadow 0.2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
+}
+#container button:hover, #container button:focus, #container button:active {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(0, 0, 0, 0.32);
+  -webkit-transition: box-shadow 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: box-shadow 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+#container button:focus {
+  outline: 0;
+}
+#container button pulse {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  left: 0;
+  margin: 0 -50%;
+  position: absolute;
+  top: 0;
+  -webkit-transform: scaleX(0) scaleY(0);
+          transform: scaleX(0) scaleY(0);
+}
+.edit-form h1 {
+  color: #27ae60;
+}
+
+#content {
+  height: 300px;
+  width: 360px;
+  margin: 0 auto;
+  display: block;
+}
+
+td {
+  padding: 10px;
+}
+
+textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: rgb(85, 85, 85);
+    background-color: rgb(255, 255, 255);
+    background-image: none;
+    box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px inset;
+    padding: 6px 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#container .delButton {
+  margin: 30px auto;
+  display: block;
+  background-color: red !important;
+}
+
+#container .delete-file {
+  padding-top: 20px;
+  text-align: center;
+  color: red;
+}
+
+footer{
+  position: absolute;
+  bottom:0;
+  background-color: #444;
+  padding:20px 0;
+  left: 0px;
+  right: 0px;
+  color: white;
+}
+
+footer .container{
+  text-align: center;
+}
+
+footer img{
+  float:left;
+}
+
+footer .social{
+  text-align: center;
+  display: inline-block;
+}
+
+
+footer .social li a{
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding-top: 10px;
+  text-align: center;
+  background-color: transparent;
+
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+}
+
+footer .social li a:hover{
+  background-color: rgba(255,255,255,0.1);
+}
+
+footer .social li a i{
+  color:#fff;
+  font-size: 14px;
+}
+
+
+footer p{
+  padding-top: 12px;
+  color: #fff;
+  font-size: 12px;
+}
