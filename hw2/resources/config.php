@@ -11,7 +11,6 @@ $config = array(
     )
 );
 $variables = array(
-    'setInIndexDotPhp' => $setInIndexDotPhp,
     'myfiles' => $myfiles
 );
 defined("LIBRARY_PATH")
