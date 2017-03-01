@@ -200,3 +200,8 @@ footer p{
   color: #fff;
   font-size: 12px;
 }
+
+button > a {
+  text-decoration: none;
+  color: white;
+}

@@ -3,16 +3,15 @@
 	<h1>Edit: <?php echo $file?></h1>
 </div>
 
-<form method="link" action="index.php">
-	<input type="submit" value ="Return">
+<form id="edit-page" method="get" action="./index.php">
+	<input type="hidden" name="a" value="save">
+	<button class="cancelButton" type="submit" value ="Return">Cancel</button>
+	<textarea>
+     <?php
+     if(file_exists($file))
+     {
+     echo file_get_contents($file);
+     }
+     ?>
+   </textarea>
 </form>
-
- <textarea>
-    <?php
-    if(file_exists($file))
-    {
-    echo file_get_contents($file);
-    }
-    ?>
-
-  </textarea>
