@@ -6,7 +6,9 @@
 </div>
 <!-- Add form to delete the file. -->
 <form id="deleteForm" action="./index.php" method="get">
-  <button class="delButton" type="submit" value="confirm">Confirm</button>
-  <button class="cancelButton" type="submit" value="cancel">Cancel</button>
+  <input type="hidden" name="file" value="<?= $file ?>">
+  <button class="delButton" type="submit" name='a' value="delete">Confirm</button>
+  <!--<button class="cancelButton" type="submit" value="cancel">Cancel</button>-->
 </form>
+<button class="cancelButton"><a href="./index.php">Cancel</a></button>
 </div>

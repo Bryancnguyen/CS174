@@ -15,7 +15,7 @@
           readView("read.php", $file);
           break;
         }
-        case "delete": {
+        case "confirm": {
           confirmView("confirm.php", $file);
           break;
         }
@@ -24,15 +24,29 @@
           {
           create($file);
           editView("edit.php", $file);
-          break;
           }
+          else {
+            $myfiles = getFiles();
+            landingView("home.php", $myfiles);
+          }
+          break;
+        }
+        case "save": {
+          writeToFile($file);
+          break;
+          //overwrite the file doesn't matter if it exists or not.
+        }
+        case "delete": {
+          deleteFile($file);
         }
         default: {
-          landingView("home.php", $variables);
+          $myfiles = getFiles();
+          landingView("home.php", $myfiles);
         }
       }
     }
     else {
-      landingView("home.php", $variables);
+      $myfiles = getFiles();
+      landingView("home.php", $myfiles);
     }
 ?>

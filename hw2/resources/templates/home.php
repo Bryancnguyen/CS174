@@ -1,8 +1,7 @@
 <!-- Homepage content -->
 <form class="createform" action="./index.php" method="get">
-  <input type="hidden" name="file" value="<?= $filename ?>">
   <input type="hidden" name="a" value="create">
-  <input placeholder="Text File Name" class="form-control" type="text" name="file" value="<?= $filename ?>">
+  <input placeholder="Text File Name" class="form-control" type="text" name="file">
   <button class="createButton" type="Submit">Create A New File</button>
 </form>
 <h2>My Files</h2>
@@ -23,8 +22,8 @@ foreach ($myfiles as $txtFile) {
     <td>
       <form class="indexform" action="./index.php" method="get">
         <input type="hidden" name="file" value="<?= $txtFile ?>">
-        <input type="hidden" name="a" value="delete">
-        <button class="deleteButton" type="Submit" value="delete">Delete</button>
+        <input type="hidden" name="a" value="confirm">
+        <button class="deleteButton" type="Submit" value="confirm">Delete</button>
       </form>
     </td>
    </tr>

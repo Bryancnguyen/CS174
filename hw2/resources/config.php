@@ -1,6 +1,5 @@
 <?php
 require_once("./resources/library/templateFunctions.php");
-$myfiles = getFiles();
 $config = array(
     "paths" => array(
         "resources" => "./resources",
@@ -10,10 +9,7 @@ $config = array(
         )
     )
 );
-$variables = array(
-    'setInIndexDotPhp' => $setInIndexDotPhp,
-    'myfiles' => $myfiles
-);
+
 defined("LIBRARY_PATH")
     or define("LIBRARY_PATH", realpath(dirname(__FILE__) . '/library'));
 

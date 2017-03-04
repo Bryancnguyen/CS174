@@ -5,15 +5,8 @@
       return glob("*.txt");
     }
 
-    function landingView($contentFile, $variables = array())
+    function landingView($contentFile, $myfiles)
     {
-      if (count($variables) > 0) {
-          foreach ($variables as $key => $value) {
-              if (strlen($key) > 0) {
-                ${$key} = $value;
-              }
-          }
-      }
         require_once(TEMPLATES_PATH . "/header.php");
         echo "<div id=\"container\">\n"
            . "\t<div id=\"content\">\n";
@@ -58,5 +51,11 @@
       $filetxt = $file . '.txt';
       fopen($filetxt, "w");
     }
-    
+
+    function writeToFile($file){
+      //overwrite here
+    }
+    function deleteFile($file) {
+      unlink($file);
+    }
 ?>
