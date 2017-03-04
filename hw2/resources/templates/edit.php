@@ -1,4 +1,5 @@
 
+
 <?php
 
 if(isset($_POST['myTextArea'])){
@@ -9,16 +10,18 @@ fclose($textFieldValue);
 }
 
 ?>
-
+<div>
+<form action="index.php" style="float: left">
+	<button type="submit" class="editButton">Return</button>
+</form>
 <form action="<?=$PHP_SELF?>" method="POST">
+	<button type="submit" name="button" class="editButton">Save</button>
 <textarea name="myTextArea">
 <?php
 echo file_get_contents($file);
 ?>
 </textarea>
-<input type="submit" name="button" value="Update File">
-</form>
 
-<form action="index.php">
-    <input type="submit" value="Return Home">
 </form>
+<div>
+
