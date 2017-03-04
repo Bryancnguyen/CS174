@@ -23,5 +23,5 @@ echo file_get_contents($file);
 </textarea>
 
 </form>
-<div>
+</div>
 
