@@ -15,7 +15,7 @@ foreach ($myfiles as $txtFile) {
       <form class="indexform" action="./index.php" method="get">
         <input type="hidden" name="file" value="<?= $txtFile ?>">
         <input type="hidden" name="a" value="read">
-        <input type="submit" value="<?= $txtFile ?>">
+        <button class="file-button" type="submit" value="<?= $txtFile ?>"><?= $txtFile ?></button>
       </form>
     </td>
     <td>

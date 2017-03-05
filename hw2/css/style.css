@@ -101,8 +101,33 @@ body {
   -webkit-transform: scaleX(0) scaleY(0);
           transform: scaleX(0) scaleY(0);
 }
+#container .file-button {
+    background-color: transparent;
+    border:1px solid #e67e22 !important;
+    color: #2c3e50;
+    font-weight: bold;
+}
 .edit-form h1 {
   color: #27ae60;
+}
+
+#container .read-wrapper {
+  width: 100%;
+  height: 100%;
+  color: rgb(85, 85, 85);
+  background-color: rgb(255, 255, 255);
+  background-image: none;
+  box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px inset;
+  padding: 6px 12px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  border-image: initial;
+  border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+#container .read-wrapper p{
+  padding: 20px;
 }
 
 #content {
@@ -136,9 +161,23 @@ textarea {
 }
 
 #container .delButton {
-  margin: 30px auto;
-  display: block;
   background-color: red !important;
+}
+
+#deleteForm {
+  padding-top: 40px;
+  margin: 0 auto;
+  display: block;
+  width: 200px;
+}
+
+.edit-buttons, .return-button {
+  padding-top: 20px;
+  float: right;
+}
+
+#container .edit-buttons .submit{
+  background-color: #27ae60;
 }
 
 #container .delete-file {

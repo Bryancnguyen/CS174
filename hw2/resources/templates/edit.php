@@ -3,7 +3,6 @@
 	<h1>Edit: <?php echo $file?></h1>
 </div>
 
-<a href="./index.php">Return</a>
 <form id="edit-page" method="get" action="./index.php">
 	<input type="hidden" name="a" value="save">
     <input type="hidden" name="file" value="<?= $file ?>">
@@ -17,5 +16,8 @@
     chdir($retdir);
     ?>
    </textarea>
-   <input type="Submit" value="Submit">
+	 <div class="edit-buttons">
+	 <button class="submit" type="Submit" value="Submit">Submit</button>
+	 <button><a href="./index.php">Return</a></button>
+	 </div>
 </form>
