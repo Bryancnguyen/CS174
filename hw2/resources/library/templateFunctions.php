@@ -2,7 +2,11 @@
     require_once(realpath(dirname(__FILE__) . "/../config.php"));
 
     function getFiles(){
-      return glob("*.txt");
+      $retdir = getcwd();
+      chdir('text_files');
+      $ret = glob("*.txt");
+      chdir($retdir);
+      return $ret;
     }
 
     function landingView($contentFile, $myfiles)
@@ -48,14 +52,26 @@
       require_once(TEMPLATES_PATH . "/footer.php");
     }
     function create($file){
-      $filetxt = $file . '.txt';
-      fopen($filetxt, "w");
+      $retdir = getcwd();
+      chdir('text_files');
+      $filersc = fopen($file, "w");
+      fclose($filersc);
+      chdir($retdir);
     }
 
-    function writeToFile($file){
-      //overwrite here
+    function writeToFile($file, $content){
+      $retdir = getcwd();
+      chdir('text_files');
+      $writefile = fopen($file, "w");
+      fwrite($writefile, $content);
+      fclose($writefile);
+      chdir($retdir);
     }
     function deleteFile($file) {
+      $retdir = getcwd();
+      chdir('text_files');
       unlink($file);
+      chdir($retdir);
+      
     }
 ?>

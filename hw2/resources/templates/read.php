@@ -1,4 +1,11 @@
-<?php echo "File: $filename"; ?>
-<p class="filetext">
-  <?= file_get_contents($filename);?>
-</p>
+<?php echo "<h2>Read: $file</h2>"; echo "<br><br>" ?>
+<div>
+	<p class="filetext">
+	<?php 
+		$retdir = getcwd();
+      	chdir('text_files');
+      	echo file_get_contents($file);
+      	chdir($retdir);
+		?>
+	</p>
+</div>
