@@ -2,7 +2,7 @@
 <form class="createform" action="./index.php" method="get">
   <input type="hidden" name="a" value="create">
   <input placeholder="Text File Name" class="form-control" type="text" name="file">
-  <button class="createButton" type="Submit">Create A New File</button>
+  <button class="createButton" type="Submit" >Create A New File</button>
 </form>
 <h2>My Files</h2>
 <table>
@@ -11,7 +11,13 @@
 foreach ($myfiles as $txtFile) {
   ?>
    <tr>
-    <td><?= $txtFile ?></td>
+    <td>
+      <form class="indexform" action="./index.php" method="get">
+        <input type="hidden" name="file" value="<?= $txtFile ?>">
+        <input type="hidden" name="a" value="read">
+        <input type="submit" value="<?= $txtFile ?>">
+      </form>
+    </td>
     <td>
       <form class="indexform" action="./index.php" method="get">
         <input type="hidden" name="file" value="<?= $txtFile ?>">

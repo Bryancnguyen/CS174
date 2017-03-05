@@ -10,5 +10,5 @@
   <button class="delButton" type="submit" name='a' value="delete">Confirm</button>
   <!--<button class="cancelButton" type="submit" value="cancel">Cancel</button>-->
 </form>
-<button class="cancelButton"><a href="./index.php">Cancel</a></button>
+<a class="cancelButton" href="./index.php">Cancel</a>
 </div>

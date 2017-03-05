@@ -22,8 +22,9 @@
         case "create": {
           if(ctype_alnum($file))
           {
-          create($file);
-          editView("edit.php", $file);
+            $file = $file . ".txt";
+            create($file);
+            editView("edit.php", $file);
           }
           else {
             $myfiles = getFiles();
@@ -32,9 +33,13 @@
           break;
         }
         case "save": {
-          writeToFile($file);
+          if (isset($_GET['mytextarea']))
+          {
+            writeToFile($file, $_GET['mytextarea']);
+          } 
+          $myfiles = getFiles();
+          landingView("home.php", $myfiles);
           break;
-          //overwrite the file doesn't matter if it exists or not.
         }
         case "delete": {
           deleteFile($file);
