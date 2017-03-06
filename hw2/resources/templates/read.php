@@ -10,5 +10,5 @@
 	</p>
 </div>
 <div class="return-button">
-<button><a href="./index.php">Return</a></button>
+<a href="./index.php">Return</a>
 </div>

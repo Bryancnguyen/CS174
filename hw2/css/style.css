@@ -66,7 +66,7 @@ body {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
 }
 
-#container button {
+#container button, #container a {
   background-color: #2c3e50;
   border: none;
   border-radius: 2px;
@@ -83,15 +83,16 @@ body {
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
   transition: box-shadow 0.2s cubic-bezier(0.895, 0.03, 0.685, 0.22);
 }
-#container button:hover, #container button:focus, #container button:active {
+#container button:hover, #container button:focus, #container button:active,
+#container a:hover, #container a:focus, #container a:active {
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 6px 12px rgba(0, 0, 0, 0.32);
   -webkit-transition: box-shadow 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
   transition: box-shadow 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-#container button:focus {
+#container button:focus, #container a:focus {
   outline: 0;
 }
-#container button pulse {
+#container button pulse, #container a pulse {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   left: 0;
@@ -240,7 +241,8 @@ footer p{
   font-size: 12px;
 }
 
-button > a {
+a {
   text-decoration: none;
   color: white;
+  padding: 8px !important;
 }

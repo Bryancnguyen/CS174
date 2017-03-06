@@ -18,6 +18,6 @@
    </textarea>
 	 <div class="edit-buttons">
 	 <button class="submit" type="Submit" value="Submit">Submit</button>
-	 <button><a href="./index.php">Return</a></button>
+	 <a href="./index.php">Return</a>
 	 </div>
 </form>
