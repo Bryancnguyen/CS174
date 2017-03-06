@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" type="text/css" href="./css/style.css"/>
-    <link rel="icon" type="image/jpg" href="./resources/doge-favicon-small.jpg">
+    <link rel="icon" type="image/jpg" href="./resources/doge-favicon-small.jpg"/>
     <title>My PHP Text Editor</title>
 </head>
 <body>

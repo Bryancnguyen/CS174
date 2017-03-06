@@ -4,7 +4,7 @@
   Some Janky Text Editor that works...
   by:
   Bryan Nguyen,
-  Jack Wanke, &
+  Jack Wanke, and
   Richard Papalia
 </p>
   </div>
