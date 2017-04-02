@@ -29,8 +29,8 @@ echo file_get_contents($file);
 </div>
 
 <form id="edit-page" method="get" action="./index.php">
-	<input type="hidden" name="a" value="save">
-    <input type="hidden" name="file" value="<?= $file ?>">
+	<input type="hidden" name="a" value="save"/>
+    <input type="hidden" name="file" value="<?= $file ?>"/>
 	<textarea name="mytextarea">
     <?php
     $retdir = getcwd();
