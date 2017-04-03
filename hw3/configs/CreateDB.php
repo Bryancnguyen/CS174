@@ -1,4 +1,9 @@
 <?php
+
+namespace cs174\hw3\models;
+
+use cs174\hw3\configs as C;
+
 require_once("./resources/config.php");
 // change these settings to be from Config.php
 // sql connection
@@ -6,8 +11,8 @@ $mysqli = new mysqli("localhost", "my_user", "my_password", "my_db");
 $stmt =  $mysqli->stmt_init();
 // prepared sql statements
 $preps = [
-"CREATE SCHEMA IF NOT EXISTS `cs174hw3` DEFAULT CHARACTER SET utf8 ;
-USE `cs174hw3`",
+"CREATE SCHEMA IF NOT EXISTS `cs174hw3` DEFAULT CHARACTER SET utf8",
+"USE `cs174hw3`",
 "CREATE TABLE IF NOT EXISTS `cs174hw3`.`categories` (
   `name` VARCHAR(45) NOT NULL,
   `idparent` INT NOT NULL,
@@ -36,7 +41,7 @@ foreach($preps as $prep){
 	$stmt->execute();
 	$stmt->bind_result($res);
 	$stmt->fetch();
-	print("Result: $res .\n")
+	print("Result: $res .\n");
     $stmt->close();
 	}
 }
