@@ -25,7 +25,7 @@ class Note extends Model{
     *  Saves the Note object to the database during instantiation. 
     */
     private function persist(){
-
+        
     }
 
     /**
