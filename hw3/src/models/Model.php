@@ -1,5 +1,4 @@
 <?php
-
 namespace cs174\hw3\models;
 use cs174\hw3\configs as C;
 include('./src/configs/Config.php');
