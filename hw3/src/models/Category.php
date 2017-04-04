@@ -3,28 +3,35 @@
 // build category model
 
 namespace cs174\hw3\models;
-
 use cs174\hw3\configs as C;
+
+include('./src/models/Model.php');
 
 class Category extends Model{
 
-    public $id;
+  public $id;
 	public $title;
 	public $parent;
+  private $categories;
 
-	public function __construct($title, $parent=""){
-    	parent::__construct();
-        $this->title = $title;
-        if($parent != "") {
-            $this->parent = $parent;
-            $this->persist();
-        }
+	public function __construct(){
+    $this->categories[] = array("category" => "1");
+    $this->categories[] = array("category" => "2");
+    	// parent::__construct();
+      //   $this->title = $title;
+      //   if($parent != "") {
+      //       $this->parent = $parent;
+      //       $this->persist();
+      //   }
     }
 
+  public function getAllCategories() {
+          return $this->categories;
+  }
 
 
     /**
-    *  Saves the Category object to the database during instantiation. 
+    *  Saves the Category object to the database during instantiation.
     */
     private function persist(){
         // assign root id
@@ -55,9 +62,9 @@ class Category extends Model{
             $mysqli->close();
             if($res)
                 return $res;
-            else 
+            else
                 return null;
-        }  
+        }
     }
 
     /**
@@ -92,7 +99,7 @@ class Category extends Model{
         $mysqli->close();
         if($res)
             return $res;
-        else 
+        else
             return -1;
     }
 
@@ -114,7 +121,7 @@ class Category extends Model{
         $mysqli->close();
         if($res)
             return $res;
-        else 
+        else
             return -1;
     }
 
@@ -128,7 +135,7 @@ class Category extends Model{
 
 
     /**
-    *  Retrieves the Sub-categories of the category from the database. 
+    *  Retrieves the Sub-categories of the category from the database.
     */
     public function getHierarchy(){
         $rootid = $this->getRootID();
@@ -144,13 +151,13 @@ class Category extends Model{
         $mysqli->close();
         if($res)
             return $res;
-        else 
+        else
             return -1;
     }
 
 
     /**
-    *  Retrieves the Sub-categories of the category from the database. 
+    *  Retrieves the Sub-categories of the category from the database.
     */
     public function getSubs(){
         $myid = $this->getRootID();
@@ -166,12 +173,12 @@ class Category extends Model{
         $mysqli->close();
         if($res)
             return $res;
-        else 
+        else
             return -1;
     }
 
     /**
-    *  Retrieves the Notes of the category from the database. 
+    *  Retrieves the Notes of the category from the database.
     */
     public function getNotes(){
         $myid = $this->getRootID();
@@ -182,7 +189,7 @@ class Category extends Model{
         // Associative array
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         //printf ("%s (%s)\n",$row["Lastname"],$row["Age"]);
-        
+
         $stmt =  $mysqli->stmt_init();
         if($stmt->prepare($prep)) {
             $stmt->execute();
@@ -193,12 +200,12 @@ class Category extends Model{
         $mysqli->close();
         if($res)
             return $res;
-        else 
+        else
             return -1;
     }
 
     /**
-    *  Adds the Sub-category to the category. 
+    *  Adds the Sub-category to the category.
     */
     public function addSub($title){
     	// construct Category with this->title (the constructor will persist the category automatically)
