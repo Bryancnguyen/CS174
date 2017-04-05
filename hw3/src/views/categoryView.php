@@ -13,7 +13,6 @@ class categoryView{
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-      <form action="">
       <h1 style="font-size:20pt;"><a href=".">Note-A-List</a></h1>
       <div class="container">
         <div class="row">
@@ -39,7 +38,6 @@ class categoryView{
         </div><!--end row-->
       </div>
 
-    </form>
     </body>
     </html>
     <?php
