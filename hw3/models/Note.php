@@ -10,6 +10,7 @@ class Note extends Model{
 	public $title;
 	public $content;
 	public $category;
+    public $date;
 
 	public function __construct($title, $content="", $category="")
     {
@@ -23,6 +24,7 @@ class Note extends Model{
         else {
             $this->content = $this->getContent();
             $this->category = $this->getCategory();
+            $this->date = $this->getDate();
         }
         $this->id = $this->getID();
     }
@@ -33,13 +35,13 @@ class Note extends Model{
     private function persist(){
         $mycat = new \cs174\hw3\models\Category($this->category);
         $mycat_id = $mycat->id;
-        $sql = "INSERT INTO `notes` (`title`,`content`,`idcategory`) VALUES ('". $this->title ."', '". $this->content ."', ". $this->category .")";
+        $sql = "INSERT INTO `notes` (`title`,`content`,`idcategory`) VALUES ('". $this->title ."', '". $this->content ."', ". $mycat_id .")";
         $mysqli = parent::connectTo("cs174hw3");
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        print($result . "\n");
+        print("Note Persist:". $result . "\n");
         $mysqli->close();
     }
 
@@ -100,6 +102,26 @@ class Note extends Model{
             $result->free();
         }
         $mysqli->close();
-        return $content;
+        return $cat;
+    }
+
+    /**
+    *  
+    */
+    private function getDate() {
+        $sql = "SELECT date FROM `notes` WHERE title='". $this->title ."'";
+        $mysqli = parent::connectTo("cs174hw3");
+        if ($mysqli->connect_errno) {
+            print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error ."\n");
+        }
+        $date = "";
+        if($result = $mysqli->query($sql) ) {
+            $row = $result->fetch_assoc();
+            $date = $row["date"];
+            print("Date: $date .\n");
+            $result->free();
+        }
+        $mysqli->close();
+        return $date;
     }
 }

@@ -97,7 +97,7 @@ class Category extends Model{
         $arr = [];
         if($result = $mysqli->query($sql) ) {
             while($row = $result->fetch_assoc()) {
-                $note = new Note($row["title"], $row["content"], $this->title);
+                $note = new Note($row["title"], $row["content"]);
                 printf("Title: %s, Content: %s, Category: %s \n", $note->title, $note->content, $note->category);
                 $arr[] = $note;
             }
