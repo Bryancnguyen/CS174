@@ -1,6 +1,6 @@
 
 <?php
-namespace cs174\hw3\views;
+//namespace cs174\hw3\views;
 
 class newNoteView{
 
