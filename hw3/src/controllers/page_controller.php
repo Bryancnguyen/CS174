@@ -6,6 +6,7 @@ require_once('./src/models/Category.php');
 require_once('./src/views/categoryView.php');
 require_once('./src/views/newListView.php');
 require_once('./src/views/newNoteView.php');
+require_once('./src/models/Note.php');
 
 class PageController {
     private $viewHelper;
@@ -13,10 +14,9 @@ class PageController {
     public function render() {
       $this->viewHelper = new \cs174\hw3\views\helpers\pageViewHelper();
       $this->categoriesModel = new \cs174\hw3\models\Category('index');
-      $someshit = $this->categoriesModel->getSubs();
-      print ($someshit->title);
-      // $this->viewHelper->assign('categories', $this->categoriesModel->getAllCategories());
-      print($categories);
+      $this->notesModel = new \cs174\hw3\models\Note('index','content','index');
+      $notes = $this->categoriesModel->getNotes();
+      $rootcategory = $this->categoriesModel->getSubs();
       if (isset($_GET['a'])) {
         $action = $_GET['a'];
         switch($action)
@@ -40,9 +40,11 @@ class PageController {
         // $this->newNoteView->render('Rich');
         // $this->newListView = new \cs174\hw3\views\newListView();
         // $this->newListView->render('Rich');
-        // $this->categoryView = new \cs174\hw3\views\categoryView();
+        $this->categoryView = new \cs174\hw3\views\categoryView();
+        $this->categoryView->render($rootcategory, $notes);
+
         // $a = [1,2,3];
-        // $b = [1,2,3];
+        $b = [1,2,3];
         // $this->categoryView->render($a, $b);
       }
   }

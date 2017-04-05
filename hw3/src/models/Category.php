@@ -21,7 +21,7 @@ class Category extends Model{
     }
 
     /**
-    *  Saves the Category object to the database during instantiation. 
+    *  Saves the Category object to the database during instantiation.
     */
     private function persist(){
         $sql = "INSERT INTO categories (`name`, `idparents`) VALUES ('". $this->title ."', " . $this->getID($this->parent) . ")";
@@ -51,16 +51,16 @@ class Category extends Model{
             if($result = $mysqli->query($sql) ) {
                 $row = $result->fetch_assoc();
                 $id = $row["id"];
-                print("ID: $id .\n");
+                // print("ID: $id .\n");
                 $result->free();
             }
             $mysqli->close();
             return $id;
-        }  
+        }
     }
 
     /**
-    *  Retrieves the Sub-categories of the category from the database. 
+    *  Retrieves the Sub-categories of the category from the database.
     */
     public function getSubs(){
         $myid = $this->getID($this->title);
@@ -73,7 +73,7 @@ class Category extends Model{
         if($result = $mysqli->query($sql) ) {
             while($row = $result->fetch_assoc()) {
                 $cat = new Category($row["name"]);
-                printf("Name: %s\n", $cat->title);
+                // printf("Name: %s\n", $cat->title);
                 $arr[] = $cat;
             }
             $result->free();
@@ -85,7 +85,7 @@ class Category extends Model{
     }
 
     /**
-    *  Retrieves the Notes of the category from the database. 
+    *  Retrieves the Notes of the category from the database.
     */
     public function getNotes(){
         $myid = $this->getID($this->title);
@@ -98,7 +98,7 @@ class Category extends Model{
         if($result = $mysqli->query($sql) ) {
             while($row = $result->fetch_assoc()) {
                 $note = new Note($row["title"], $row["content"]);
-                printf("Title: %s, Content: %s, Category: %s \n", $note->title, $note->content, $note->category);
+                // printf("Title: %s, Content: %s, Category: %s \n", $note->title, $note->content, $note->category);
                 $arr[] = $note;
             }
             $result->free();
@@ -108,7 +108,7 @@ class Category extends Model{
     }
 
     /**
-    *  Adds the Sub-category to the category. 
+    *  Adds the Sub-category to the category.
     */
     public function addSub($title){
     	// construct Category with this->title (the constructor will persist the category automatically)
