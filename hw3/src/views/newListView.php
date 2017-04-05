@@ -1,7 +1,5 @@
-
-
 <?php
-//namespace cs174\hw3\views;
+namespace cs174\hw3\views;
 
 class newListView{
 
@@ -14,8 +12,9 @@ class newListView{
       <title>New List Page</title>
       <head>
 
-        <h1 style="font-size:20pt;">Note-A-List/PHP THAT WILL DISPLAY SPECIFIC SUBLIST</h1>
-        <form action="Insert Action here">
+        <h1 style="font-size:20pt;"><a href="./index.php">Note-A-List/</a><a href="./<?=$someVariable?>">
+          <?=$someVariable?></a></h1>
+        <form action="./index.php">
           <h1> New List </h1>
           <input type="text" value="Enter a new list name">
           <input type="submit" value="Add">
@@ -26,6 +25,3 @@ class newListView{
       }
 
     }
-    $a = [1,2,3];
-    $newListViewVar = new newListView();
-    $newListViewVar->render($a);

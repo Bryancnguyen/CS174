@@ -1,21 +1,27 @@
 <?php
+
 namespace cs174\hw3\models;
+require_once('./configs/Config.php');
+
 use cs174\hw3\configs as C;
-include('./src/configs/Config.php');
 
 class Model {
 
 	public $db_usr;
 	public $db_pwd;
-	public $db_nme;
-	public function __construct($db_usr =C\DB_USR, $db_pwd =C\DB_PWD, $db_nme = C\DB_NME)
+	public $db_prt;
+
+	public function __construct($db_usr =\cs174\hw3\configs\DB_USR, $db_pwd =\cs174\hw3\configs\DB_PWD, $db_prt = \cs174\hw3\configs\DB_PRT)
     {
         $this->db_usr = $db_usr;
         $this->db_pwd = $db_pwd;
-        $this->db_nme = $db_nme;
+        $this->db_prt = $db_prt;
     }
 
     public function connect(){
-    	return new mysqli("localhost", $this->db_usr, $this->db_pwd, $this->db_nme);
+    	return new \mysqli("127.0.0.1:" . $this->db_prt, $this->db_usr, $this->db_pwd);
+    }
+    public function connectTo($db){
+    	return new \mysqli("127.0.0.1:" . $this->db_prt, $this->db_usr, $this->db_pwd, $db);
     }
 }

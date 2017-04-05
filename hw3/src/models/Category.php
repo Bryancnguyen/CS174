@@ -1,214 +1,117 @@
 <?php
 
-// build category model
-
 namespace cs174\hw3\models;
-use cs174\hw3\configs as C;
 
-include('./src/models/Model.php');
+require_once("Model.php");
 
 class Category extends Model{
 
-  public $id;
+    public $id;
 	public $title;
 	public $parent;
-  private $categories;
 
-	public function __construct(){
-    $this->categories[] = array("category" => "1");
-    $this->categories[] = array("category" => "2");
-    	// parent::__construct();
-      //   $this->title = $title;
-      //   if($parent != "") {
-      //       $this->parent = $parent;
-      //       $this->persist();
-      //   }
+	public function __construct($title, $parent=""){
+    	parent::__construct();
+        $this->title = $title;
+        $this->parent = $parent;
+        if($parent != "") {
+            $this->persist();
+        }
+        $this->id = $this->getID($title);
     }
 
-  public function getAllCategories() {
-          return $this->categories;
-  }
-
-
     /**
-    *  Saves the Category object to the database during instantiation.
+    *  Saves the Category object to the database during instantiation. 
     */
     private function persist(){
-        // assign root id
-        // insert into table
-        $prep = "INSERT INTO `cs174hw3`.`categories`
-        (`name`, `idparent`)
-        VALUES
-        ('". $this->parent . "', " . $this->getID($this->parent) . ")";
+        $sql = "INSERT INTO categories (`name`, `idparents`) VALUES ('". $this->title ."', " . $this->getID($this->parent) . ")";
+        $mysqli = parent::connectTo("cs174hw3");
+        if ($mysqli->connect_errno) {
+            print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
+        }
+        $result = \mysqli_query($mysqli,$sql);
+        print($result . "\n");
+        $mysqli->close();
     }
 
     /**
     *  Retrieves the ID of the category title.
     */
     private function getID($title){
-        if($title == "root"){
-            return -1;
+        if($title == "index"){
+            return 1;
         }
         else {
-            $mysqli = parent::connect();
-            $prep = "SELECT idcategories FROM `cs174hw3`.`categories` WHERE name='$title'";
-            $stmt =  $mysqli->stmt_init();
-            if($stmt->prepare($prep)) {
-                $stmt->execute();
-                $stmt->bind_result($res);
-                $stmt->fetch();
-                $stmt->close();
+            $mysqli = parent::connectTo("cs174hw3");
+            if ($mysqli->connect_errno) {
+                print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
+            }
+            $sql = "SELECT id FROM `categories` WHERE name='$title'";
+            $id = -1;
+            if($result = $mysqli->query($sql) ) {
+                $row = $result->fetch_assoc();
+                $id = $row["id"];
+                print("ID: $id .\n");
+                $result->free();
             }
             $mysqli->close();
-            if($res)
-                return $res;
-            else
-                return null;
-        }
+            return $id;
+        }  
     }
 
     /**
-    *
-    *
-    */
-    private function assignRootID(){
-        $parent = $this->getID($this->parent);
-        if($parentID > 0) { // sub category, so assign parent's rootid
-            return $this->getRootID($this->parent);
-        }
-        else {
-            return $this->getMaxRootID() + 1;
-        }
-    }
-
-    /**
-    *
-    *
-    */
-    private function getRootID($title){
-        // fetch rootid from db
-        $mysqli = parent::connect();
-        $prep = "SELECT idroot FROM `cs174hw3`.`categories` WHERE name='$title'";
-        $stmt =  $mysqli->stmt_init();
-        if($stmt->prepare($prep)) {
-            $stmt->execute();
-            $stmt->bind_result($res);
-            $stmt->fetch();
-            $stmt->close();
-        }
-        $mysqli->close();
-        if($res)
-            return $res;
-        else
-            return -1;
-    }
-
-    /**
-    *
-    *
-    */
-    private function getMaxRootID(){
-        // fetch rootid from db
-        $mysqli = parent::connect();
-        $prep = "SELECT MAX(idroot) FROM `cs174hw3`.`categories`";
-        $stmt =  $mysqli->stmt_init();
-        if($stmt->prepare($prep)) {
-            $stmt->execute();
-            $stmt->bind_result($res);
-            $stmt->fetch();
-            $stmt->close();
-        }
-        $mysqli->close();
-        if($res)
-            return $res;
-        else
-            return -1;
-    }
-
-    /**
-    *  Returns the parent Category object of this object, or null if it doesn't exist.
-    *
-    */
-    private function getParentCategory(){
-        // fetch rootid from db
-    }
-
-
-    /**
-    *  Retrieves the Sub-categories of the category from the database.
-    */
-    public function getHierarchy(){
-        $rootid = $this->getRootID();
-        $mysqli = parent::connect();
-        $prep = "SELECT * FROM `cs174hw3`.`categories` WHERE idroot=$rootid";
-        $stmt =  $mysqli->stmt_init();
-        if($stmt->prepare($prep)) {
-            $stmt->execute();
-            $stmt->bind_result($res);
-            $stmt->fetch();
-            $stmt->close();
-        }
-        $mysqli->close();
-        if($res)
-            return $res;
-        else
-            return -1;
-    }
-
-
-    /**
-    *  Retrieves the Sub-categories of the category from the database.
+    *  Retrieves the Sub-categories of the category from the database. 
     */
     public function getSubs(){
-        $myid = $this->getRootID();
-        $mysqli = parent::connect();
-        $prep = "SELECT * FROM `cs174hw3`.`categories` WHERE idparent=$myid";
-        $stmt =  $mysqli->stmt_init();
-        if($stmt->prepare($prep)) {
-            $stmt->execute();
-            $stmt->bind_result($res);
-            $stmt->fetch();
-            $stmt->close();
+        $myid = $this->getID($this->title);
+        $mysqli = parent::connectTo("cs174hw3");
+        if ($mysqli->connect_errno) {
+            print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error ."\n");
         }
-        $mysqli->close();
-        if($res)
-            return $res;
+        $sql = "SELECT * FROM `categories` WHERE idparents=$myid";
+        $arr = [];
+        if($result = $mysqli->query($sql) ) {
+            while($row = $result->fetch_assoc()) {
+                $cat = new Category($row["name"]);
+                printf("Name: %s\n", $cat->title);
+                $arr[] = $cat;
+            }
+            $result->free();
+        }
         else
-            return -1;
+            print("Failed to query subcats.\n");
+        $mysqli->close();
+        return $arr;
     }
 
     /**
-    *  Retrieves the Notes of the category from the database.
+    *  Retrieves the Notes of the category from the database. 
     */
     public function getNotes(){
-        $myid = $this->getRootID();
-        $mysqli = parent::connect();
-        $prep = "SELECT * FROM `cs174hw3`.`notes` WHERE idcategory=$myid";
-        $result = mysqli_query($mysqli,$prep);
-
-        // Associative array
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        //printf ("%s (%s)\n",$row["Lastname"],$row["Age"]);
-
-        $stmt =  $mysqli->stmt_init();
-        if($stmt->prepare($prep)) {
-            $stmt->execute();
-            $stmt->bind_result($res);
-            $stmt->fetch();
-            $stmt->close();
+        $myid = $this->getID($this->title);
+        $mysqli = parent::connectTo("cs174hw3");
+        if ($mysqli->connect_errno) {
+            print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error ."\n");
+        }
+        $sql = "SELECT * FROM `cs174hw3`.`notes` WHERE idcategory=$myid";
+        $arr = [];
+        if($result = $mysqli->query($sql) ) {
+            while($row = $result->fetch_assoc()) {
+                $note = new Note($row["title"], $row["content"]);
+                printf("Title: %s, Content: %s, Category: %s \n", $note->title, $note->content, $note->category);
+                $arr[] = $note;
+            }
+            $result->free();
         }
         $mysqli->close();
-        if($res)
-            return $res;
-        else
-            return -1;
+        return $arr;
     }
 
     /**
-    *  Adds the Sub-category to the category.
+    *  Adds the Sub-category to the category. 
     */
     public function addSub($title){
     	// construct Category with this->title (the constructor will persist the category automatically)
-        C\Category($title, $this->name);
+        new Category($title, $this->name);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-//namespace cs174\hw3\views;
+namespace cs174\hw3\views;
 
 class categoryView{
 
@@ -21,7 +21,7 @@ class categoryView{
             echo '<h2 style="margin-bottom:1px;padding-bottom:1px;">Lists</h2>';
             echo '<ul>';
             foreach($listArray as $listObject){
-              echo '<li>'.$listObject['category'].'</li>';
+              echo '<li>'.$listObject.'</li>';
             }
 
             echo '</ul>';
@@ -43,7 +43,3 @@ class categoryView{
   }
 
 }
-$a = [1,2,3];
-$b = [1,2,3];
-$categoryViewVar = new categoryView();
-$categoryViewVar->render($a, $b);

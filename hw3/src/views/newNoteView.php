@@ -1,6 +1,5 @@
-
 <?php
-//namespace cs174\hw3\views;
+namespace cs174\hw3\views;
 
 class newNoteView{
 
@@ -13,7 +12,8 @@ class newNoteView{
     <title>New Note Page</title>
     <head>
 
-    <h1 style="font-size:20pt;">Note-A-List/PHP THAT WILL DISPLAY SPECIFIC SUBLIST</h1>
+    <h1 style="font-size:20pt;"><a href="./index.php">Note-A-List/</a><a href="./<?=$someVariable?>">
+      <?=$someVariable?></a></h1>
     <form action="Insert Action here" id = "newNoteForm">
     <h2> New Note </h2>
     Title: <input type="text">
@@ -27,6 +27,3 @@ class newNoteView{
   }
 
 }
-$a = [1,2,3];
-$newNoteViewVar = new newNoteView();
-$newNoteViewVar->render($a);
