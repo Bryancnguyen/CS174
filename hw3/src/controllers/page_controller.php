@@ -1,6 +1,8 @@
 <?php
 namespace cs174\hw3\controllers;
 
+session_start();
+
 require_once('./src/views/helpers/page_view_helper.php');
 require_once('./src/models/Category.php');
 require_once('./src/views/categoryView.php');
@@ -14,25 +16,20 @@ class PageController {
     public function render() {
       $this->viewHelper = new \cs174\hw3\views\helpers\pageViewHelper();
       $this->categoriesModel = new \cs174\hw3\models\Category('index');
-      $this->notesModel = new \cs174\hw3\models\Note('index','content','index');
+      // $this->notesModel = new \cs174\hw3\models\Note('index','content','index');
       $notes = $this->categoriesModel->getNotes();
       $rootcategory = $this->categoriesModel->getSubs();
-      if (isset($_GET['a'])) {
-        $action = $_GET['a'];
-        switch($action)
-        {
-        case 'newlist':
-          $newListView = new \cs174\hw3\views\newListView();
-          break;
-        case 'newNote':
-          $newNoteView = new \cs174\hw3\views\newNoteView();
-          break;
-        default:
-          $categoryView = new \cs174\hw3\views\categoryView();
-          $a = [1,2,3];
-          $b = [1,2,3];
-          $this->categoryView->render($a, $b);
-        }
+      $_SESSION['selected_category'] = $_GET['category'];
+      $_SESSION['selected_notes'] = $_GET['notes'];
+      print  $_SESSION['selected_category'];
+      print $_SESSION['selected_notes'];
+      if (isset($_SESSION['selected_category'])) {
+        $action = $_SESSION['selected_category'];
+        $this->categoriesModel = new \cs174\hw3\models\Category($action);
+        $rootcategory = $this->categoriesModel->getSubs();
+        $notes = $this->categoriesModel->getNotes();
+        $this->categoryView = new \cs174\hw3\views\categoryView();
+        $this->categoryView->render($rootcategory, $notes);
       }
       else {
 

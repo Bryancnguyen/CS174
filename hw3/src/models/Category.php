@@ -30,7 +30,7 @@ class Category extends Model{
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        print($result . "\n");
+        // print($result . "\n");
         $mysqli->close();
     }
 

@@ -3,7 +3,7 @@ namespace cs174\hw3\views;
 
 class categoryView{
 
-  function render($listArray, $noteArray, $categoryName, $parentName){
+  function render($listArray, $noteArray){
     ?>
     <!DOCTYPE html>
     <html>
@@ -11,73 +11,48 @@ class categoryView{
       <title>Note-A-List</title>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="./src/styles/style.css"/>
     </head>
     <body>
-      <?php
-      if ($parentName != "") {
-        ?>
-        <form action="./index.php" method="get">
-          <input type="hidden" name="title" value="<?= $parentName ?>"/>
-          <input type="hidden" name="action" value="DisplayList"/>
-          <button type="submit" value="Note-A-List/<?= $parentName?>"></button>
-        </form>
-        <?php
-      }
-      else{
-        ?>
-        <h1 style="font-size:20pt;"><a href=".">Note-A-List</a></h1>
-        <?php
-      }
-      ?>
+      <div class="craigslist-body">
+      <h1><a href="./index.php">Note-A-List</a></h1>
       <div class="container">
-        <div class="row">
-          <ul>
+        <div class="lists">
             <?php
-            echo '<h2 style="margin-bottom:1px;padding-bottom:1px;">Lists</h2>';
+            echo '<h2>Lists</h2>';
             echo '<ul>';
             echo '<li>'?>
-              <form action="./index.php" method="get">
-                <input type="hidden" name="title" value="<?= $categoryName ?>"/>
-                <input type="hidden" name="action" value="newCategory"/>
-                <button type="submit" value="[New List]"></button>
-              </form>
-              <?php'</li>';
+              <a href="./index.php?newList">[New List]</a>
+              <?php echo '</li>';
               foreach($listArray as $listObject){
                 echo '<li>'?>
-                  <form action="./index.php" method="get">
-                    <input type="hidden" name="title" value="<?= $listObject->title ?>"/>
-                    <input type="hidden" name="action" value="DisplayList"/>
-                    <button type="submit" value="<?= $listObject->title?>"></button>
-                  </form>
-                  <?php'</li>';
+                  <a href="./index.php?category=<?= $listObject->title?>"><?= $listObject->title?></a>
+                  <?php echo '</li>';
                 }
 
                 echo '</ul>';
-                echo '<h2 style="margin-bottom:1px;padding-bottom:1px;">Notes</h2>';
+                ?>
+                </div><!--end row-->
+              <div class="notes">
+                <?php
+                echo '<h2>Notes</h2>';
 
                 echo '<ul>';
                 echo '<li>'?>
-                  <form action="./index.php" method="get">
-                    <input type="hidden" name="title" value="<?= $categoryName ?>"/>
-                    <input type="hidden" name="action" value="NewNote"/>
-                    <button type="submit" value="[New Note]"></button>
-                  </form>
-                  <?php'</li>';
+                  <a href="./index.php?newNote">[New Note]</a>
+                  <?php echo '</li>';
                   foreach($noteArray as $noteObject){
                     echo '<li>'?>
-                      <form action="./index.php" method="get">
-                        <input type="hidden" name="title" value="<?= $noteObject->title ?>"/>
-                        <input type="hidden" name="action" value="DisplayNote"/>
-                        <button type="submit" value="<?= $noteObject->title?>"></button>
-                      </form>
-                      <?php'</li>';
+                      <a href="./index.php?notes=<?= $noteObject->title?>"><?= $noteObject->title?></a>
+                      <?php echo '</li>';
                     }
 
                     echo '</ul>';
                     ?>
-                  </ul>
-                </div><!--end row-->
+
               </div>
+            </div>
+            </div>
 
             </body>
             </html>

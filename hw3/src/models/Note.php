@@ -30,7 +30,7 @@ class Note extends Model{
     }
 
     /**
-    *  Saves the Note object to the database during instantiation. 
+    *  Saves the Note object to the database during instantiation.
     */
     private function persist(){
         $mycat = new \cs174\hw3\models\Category($this->category);
@@ -41,7 +41,7 @@ class Note extends Model{
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        print("Note Persist:". $result . "\n");
+        // print("Note Persist:". $result . "\n");
         $mysqli->close();
     }
 
@@ -58,7 +58,7 @@ class Note extends Model{
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
             $id = $row["id"];
-            print("ID: $id .\n");
+            // print("ID: $id .\n");
             $result->free();
         }
         $mysqli->close();
@@ -78,7 +78,7 @@ class Note extends Model{
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
             $content = $row["content"];
-            print("Content: $content .\n");
+            // print("Content: $content .\n");
             $result->free();
         }
         $mysqli->close();
@@ -98,7 +98,7 @@ class Note extends Model{
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
             $cat = $row["idcategory"];
-            print("Category: $cat .\n");
+            // print("Category: $cat .\n");
             $result->free();
         }
         $mysqli->close();
@@ -106,7 +106,7 @@ class Note extends Model{
     }
 
     /**
-    *  
+    *
     */
     private function getDate() {
         $sql = "SELECT date FROM `notes` WHERE title='". $this->title ."'";
@@ -118,7 +118,7 @@ class Note extends Model{
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
             $date = $row["date"];
-            print("Date: $date .\n");
+            // print("Date: $date .\n");
             $result->free();
         }
         $mysqli->close();
