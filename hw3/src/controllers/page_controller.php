@@ -8,7 +8,9 @@ require_once('./src/models/Category.php');
 require_once('./src/views/categoryView.php');
 require_once('./src/views/newListView.php');
 require_once('./src/views/newNoteView.php');
+require_once('./src/views/noteView.php');
 require_once('./src/models/Note.php');
+require_once('./src/views/layout/webLayout.php');
 
 class PageController {
     private $viewHelper;
@@ -23,25 +25,36 @@ class PageController {
       $_SESSION['selected_notes'] = $_GET['notes'];
       print  $_SESSION['selected_category'];
       print $_SESSION['selected_notes'];
+      if(isset($_SESSION['selected_category']) || isset($_SESSION['selected_notes']))
+      {
       if (isset($_SESSION['selected_category'])) {
         $action = $_SESSION['selected_category'];
         $this->categoriesModel = new \cs174\hw3\models\Category($action);
         $rootcategory = $this->categoriesModel->getSubs();
         $notes = $this->categoriesModel->getNotes();
-        $this->categoryView = new \cs174\hw3\views\categoryView();
-        $this->categoryView->render($rootcategory, $notes);
+        $this->categoryView = new \cs174\hw3\views\categoryView('WebLayout');
+        $this->categoryView->display($rootcategory, $notes);
       }
+      if (isset($_SESSION['selected_notes'])) {
+        $action = $_SESSION['selected_notes'];
+        $noteModel = new \cs174\hw3\models\Note($action);
+        // $rootcategory = $this->noteModel->getSubs();
+        // $notes = $this->categoriesModel->getNotes();
+        $this->categoryView = new \cs174\hw3\views\noteView('WebLayout');
+        $this->categoryView->display($noteModel);
+      }
+    }
       else {
 
         // $this->newNoteView = new \cs174\hw3\views\newNoteView();
         // $this->newNoteView->render('Rich');
         // $this->newListView = new \cs174\hw3\views\newListView();
         // $this->newListView->render('Rich');
-        $this->categoryView = new \cs174\hw3\views\categoryView();
-        $this->categoryView->render($rootcategory, $notes);
+        $this->categoryView = new \cs174\hw3\views\categoryView('WebLayout');
+        $this->categoryView->display($rootcategory, $notes);
 
         // $a = [1,2,3];
-        $b = [1,2,3];
+        // $b = [1,2,3];
         // $this->categoryView->render($a, $b);
       }
   }

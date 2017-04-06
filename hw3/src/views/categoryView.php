@@ -1,20 +1,11 @@
 <?php
 namespace cs174\hw3\views;
+require_once('./src/views/helpers/categoryViewHelper.php');
 
-class categoryView{
+class categoryView extends \cs174\hw3\views\helpers\categoryViewHelper{
 
-  function render($listArray, $noteArray){
+  function render($listArray =[], $noteArray =[]){
     ?>
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Note-A-List</title>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="./src/styles/style.css"/>
-    </head>
-    <body>
-      <div class="craigslist-body">
       <h1><a href="./index.php">Note-A-List</a></h1>
       <div class="container">
         <div class="lists">
@@ -49,13 +40,6 @@ class categoryView{
 
                     echo '</ul>';
                     ?>
-
-              </div>
-            </div>
-            </div>
-
-            </body>
-            </html>
             <?php
           }
 
