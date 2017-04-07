@@ -2,7 +2,6 @@
 
 namespace cs174\hw3\models;
 require_once('./src/configs/Config.php');
-
 use cs174\hw3\configs as C;
 
 class Model {

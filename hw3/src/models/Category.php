@@ -9,6 +9,7 @@ class Category extends Model{
     public $id;
 	public $title;
 	public $parent;
+    public $hasMultipleParents;
 
 	public function __construct($title, $parent=""){
     	parent::__construct();
@@ -17,7 +18,11 @@ class Category extends Model{
         if($parent != "") {
             $this->persist();
         }
+        else { // $parent == ""
+            $this->parent = $this->getParent($title);
+        }
         $this->id = $this->getID($title);
+        $this->hasMultipleParents = $this->hasMultipleParentCategories();
     }
 
     /**
@@ -57,6 +62,59 @@ class Category extends Model{
             $mysqli->close();
             return $id;
         }
+    }
+
+    /**
+    *  Retrieves the ID of the category title.
+    */
+    private function getParent($title){
+        if($title == "index"){
+            return "";
+        }
+        else {
+            $mysqli = parent::connectTo("cs174hw3");
+            if ($mysqli->connect_errno) {
+                print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
+            }
+            $sql = "SELECT name FROM `categories` WHERE id=(SELECT idparents FROM `categories` WHERE name='$title')";
+            $name = -1;
+            if($result = $mysqli->query($sql) ) {
+                $row = $result->fetch_assoc();
+                $name = $row["name"];
+                // print("ID: $id .\n");
+                $result->free();
+            }
+            $mysqli->close();
+            return $name;
+            // $sql = "SELECT idparents FROM `categories` WHERE name='$title'";
+            // $id = -1;
+            // if($result = $mysqli->query($sql) ) {
+            //     $row = $result->fetch_assoc();
+            //     $id = $row["idparents"];
+            //     // print("ID: $id .\n");
+            //     $result->free();
+            // }
+            // $sql = "SELECT name FROM `categories` WHERE id=$id";
+            // $name = "";
+            // if($result = $mysqli->query($sql) ) {
+            //     $row = $result->fetch_assoc();
+            //     $name = $row["name"];
+            //     // print("ID: $id .\n");
+            //     $result->free();
+            // }
+            // $mysqli->close();
+            // return $id;
+        }
+    }
+
+    /**
+    *
+    */
+    private function hasMultipleParentCategories(){
+        if($this->parent == "" || $this->parent == "index"){
+            return False;
+        }
+        return True;
     }
 
     /**
