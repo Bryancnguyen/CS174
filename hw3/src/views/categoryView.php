@@ -24,7 +24,7 @@ class categoryView extends \cs174\hw3\views\helpers\categoryViewHelper{
             echo '<h2>Lists</h2>';
             echo '<ul>';
             echo '<li>'?>
-              <a href="./index.php?newList">[New List]</a>
+              <a href="./index.php?newlist=<?=$_SESSION['selected_category']?>">[New List]</a>
               <?php echo '</li>';
               foreach($listArray as $listObject){
                 echo '<li>'?>

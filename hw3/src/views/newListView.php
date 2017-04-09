@@ -1,9 +1,10 @@
 <?php
 namespace cs174\hw3\views;
+require_once('./src/views/helpers/newListViewHelper.php');
 
-class newListView{
+class newListView extends \cs174\hw3\views\helpers\newListViewHelper {
 
-  function render($someVariable, $parentName){
+  function render($parent){
 
     ?>
     <!DOCTYPE html>
@@ -12,26 +13,25 @@ class newListView{
       <title>New List Page</title>
     </head>
 
-    <?php
-    if ($parentName != "") {
+    <h1><a href="./index.php">Note-A-List/</a>
+      <a href="./index.php?category=<?=$parent?>"><?php if(isset($parent) && $parent != '') {
+        echo '../';
+      }
+      ?><?=$parent?></a>
+      <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$parent?>"> <?php if(isset($parent) && $parent != '') {
+        echo '/';
+        echo $_SESSION['selected_category'];
+      }
       ?>
-      <form action="./index.php" method="get">
-        <input type="hidden" name="title" value="<?= $parentName ?>"/>
-        <input type="hidden" name="action" value="DisplayList"/>
-        <button type="submit" value="Note-A-List/<?= $parentName?>"></button>
-      </form>
-      <?php
-    }
-    else{
-      ?>
-      <h1 style="font-size:20pt;"><a href=".">Note-A-List</a></h1>
-      <?php
-    }
-    ?>
-        <form action="./index.php">
+      </a>
+    </h1>
+
+        <form action="./index.php?category=<?=$parent?>" method="post">
           <h1> New List </h1>
-          <input type="text" value="Enter a new list name">
-          <input type="submit" value="Add">
+          <div class="new-list">
+          <input name='text' type="text" placeholder="Enter a new list name">
+          <button class="addButton" type="submit" name='a'>Add</button>
+        </div>
         </form>
 
         </html>

@@ -23,11 +23,16 @@ class PageController {
       $rootcategory = $this->categoriesModel->getSubs();
       $_SESSION['selected_category'] = $_GET['category'];
       $_SESSION['selected_notes'] = $_GET['notes'];
+      $_SESSION['newlist'] = $_GET['newlist'];
+      $newCategory = $_POST['text'];
       $parent = '';
       // print  $_SESSION['selected_category'];
       // print $_SESSION['selected_notes'];
       if(isset($_SESSION['selected_category']) || isset($_SESSION['selected_notes']))
       {
+        if(isset($newCategory)) {
+          $this->categoriesModel = new \cs174\hw3\models\Category($newCategory, $_SESSION['selected_category']);
+        }
       if (isset($_SESSION['selected_category'])) {
         $action = $_SESSION['selected_category'];
         $this->categoriesModel = new \cs174\hw3\models\Category($action);
@@ -46,6 +51,13 @@ class PageController {
         $this->categoryView = new \cs174\hw3\views\noteView('WebLayout');
         $this->categoryView->display($noteModel, $parent);
       }
+    }
+    else if(isset($_SESSION['newlist']))
+    {
+      //create new list by passing in parent and then parent
+      $category = $_SESSION['newlist'];
+      $this->newListView = new \cs174\hw3\views\newListView('WebLayout');
+      $this->newListView->display($category);
     }
       else {
 
