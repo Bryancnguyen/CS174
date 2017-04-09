@@ -17,23 +17,26 @@ class PageController {
     private $categoriesModel;
     public function render() {
       $this->viewHelper = new \cs174\hw3\views\helpers\pageViewHelper();
-      $this->categoriesModel = new \cs174\hw3\models\Category('index');
-      // $this->notesModel = new \cs174\hw3\models\Note('index','content','index');
-      $notes = $this->categoriesModel->getNotes();
-      $rootcategory = $this->categoriesModel->getSubs();
-      $_SESSION['selected_category'] = $_GET['category'];
-      $_SESSION['selected_notes'] = $_GET['notes'];
-      $_SESSION['newlist'] = $_GET['newlist'];
-      $newCategory = $_POST['text'];
-      $parent = '';
-      // print  $_SESSION['selected_category'];
-      // print $_SESSION['selected_notes'];
-      if(isset($_SESSION['selected_category']) || isset($_SESSION['selected_notes']))
+      $this->categoriesModel = new \cs174\hw3\models\Category('index'); //get base index
+      $notes = $this->categoriesModel->getNotes(); //get all note in that category
+      $rootcategory = $this->categoriesModel->getSubs(); //get all sub categories
+      $_SESSION['selected_category'] = $_GET['category']; //show category page
+      $_SESSION['selected_notes'] = $_GET['notes']; //show note page
+      $_SESSION['newlist'] = $_GET['newlist']; //direct to new list page
+      $_SESSION['newnote'] = $_GET['newnote']; //direct to new note page
+      $newCategory = $_POST['text']; //new category name for new list
+      $parent = ''; // set parent as blank in case of landing page
+      $newTitle = $_POST['title-text']; //new title for new note;
+      $newContent = $_POST['description']; //new content for new note
+      if(isset($_SESSION['selected_category']) || isset($_SESSION['selected_notes'])) //Only goes in if set
       {
-        if(isset($newCategory)) {
+        if(isset($newCategory)) { //handles creating the actual category for new list page
           $this->categoriesModel = new \cs174\hw3\models\Category($newCategory, $_SESSION['selected_category']);
         }
-      if (isset($_SESSION['selected_category'])) {
+        if(isset($newTitle) || $newContent) {
+          $this->noteModel = new \cs174\hw3\models\Note($newTitle, $newContent, $_SESSION['selected_category']);
+        }
+      if (isset($_SESSION['selected_category'])) { //handles selected category
         $action = $_SESSION['selected_category'];
         $this->categoriesModel = new \cs174\hw3\models\Category($action);
         $parent = $this->categoriesModel->parent;
@@ -42,7 +45,7 @@ class PageController {
         $this->categoryView = new \cs174\hw3\views\categoryView('WebLayout');
         $this->categoryView->display($rootcategory, $notes, $parent);
       }
-      if (isset($_SESSION['selected_notes'])) {
+      if (isset($_SESSION['selected_notes'])) { //handles selected note
         $action = $_SESSION['selected_notes'];
         $noteModel = new \cs174\hw3\models\Note($action);
         $rootcategory = $this->categoriesModel->getSubs();
@@ -52,7 +55,7 @@ class PageController {
         $this->categoryView->display($noteModel, $parent);
       }
     }
-    else if(isset($_SESSION['newlist']))
+    else if(isset($_SESSION['newlist'])) //handles new listing
     {
       if(empty($_SESSION['newlist'])){
         $_SESSION['newlist'] = 'index';
@@ -62,12 +65,16 @@ class PageController {
       $this->newListView = new \cs174\hw3\views\newListView('WebLayout');
       $this->newListView->display($category);
     }
-      else {
-
-        // $this->newNoteView = new \cs174\hw3\views\newNoteView();
-        // $this->newNoteView->render('Rich');
-        // $this->newListView = new \cs174\hw3\views\newListView();
-        // $this->newListView->render('Rich');
+    else if(isset($_SESSION['newnote'])) //handles new note
+    {
+      if(empty($_SESSION['newnote'])){
+        $_SESSION['newnote'] = 'index';
+      }
+      $category = $_SESSION['newnote'];
+      $this->newNoteView = new \cs174\hw3\views\newNoteView('WebLayout');
+      $this->newNoteView->display($category);
+    }
+      else { // handles landing page
         $this->categoryView = new \cs174\hw3\views\categoryView('WebLayout');
         $this->categoryView->display($rootcategory, $notes, $parent);
       }

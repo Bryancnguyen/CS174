@@ -7,12 +7,13 @@ class categoryView extends \cs174\hw3\views\helpers\categoryViewHelper{
   function render($listArray =[], $noteArray =[], $parent){
     ?>
       <h1><a href="./index.php">Note-A-List/</a>
-        <a href="./index.php?category=<?=$parent?>"><?php if(isset($parent) && $parent != '') {
+        <a href="./index.php?category=<?=$parent?>"><?php if(isset($parent) && $parent != '' && $parent !='index') {
           echo '../';
+        ?><?=$parent?></a> <?php
+        echo '/';
         }
-        ?><?=$parent?></a>
+       ?>
         <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$parent?>"> <?php if(isset($parent) && $parent != '') {
-          echo '/';
           echo $_SESSION['selected_category'];
         }
         ?>
@@ -24,7 +25,7 @@ class categoryView extends \cs174\hw3\views\helpers\categoryViewHelper{
             echo '<h2>Lists</h2>';
             echo '<ul>';
             echo '<li>'?>
-              <a href="./index.php?newlist=<?=$_SESSION['selected_category']?>">[New List]</a>
+              <a href="./index.php?newlist=<?=$_SESSION['selected_category']?>&parent=<?=$parent?>">[New List]</a>
               <?php echo '</li>';
               foreach($listArray as $listObject){
                 echo '<li>'?>
@@ -40,7 +41,7 @@ class categoryView extends \cs174\hw3\views\helpers\categoryViewHelper{
 
                 echo '<ul>';
                 echo '<li>'?>
-                  <a href="./index.php?newNote">[New Note]</a>
+                  <a href="./index.php?newnote=<?=$_SESSION['selected_category']?>">[New Note]</a>
                   <?php echo '</li>';
                   foreach($noteArray as $noteObject){
                     echo '<li>'?>

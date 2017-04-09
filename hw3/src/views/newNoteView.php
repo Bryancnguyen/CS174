@@ -1,42 +1,35 @@
 <?php
 namespace cs174\hw3\views;
+require_once('./src/views/helpers/newNoteViewHelper.php');
 
-class newNoteView{
+class newNoteView extends \cs174\hw3\views\helpers\newNoteViewHelper{
 
-  function render($someVariable, $parentName){
+  function render($category){
     ?>
-    <!DOCTYPE html>
-
-    <html>
-    <head>
-    <title>New Note Page</title>
-    <head>
-
-      <?php
-      if ($parentName != "") {
-        ?>
-        <form action="./index.php" method="get">
-          <input type="hidden" name="title" value="<?= $parentName ?>"/>
-          <input type="hidden" name="action" value="DisplayList"/>
-          <button type="submit" value="Note-A-List/<?= $parentName?>"></button>
-        </form>
-        <?php
+    <h1><a href="./index.php">Note-A-List/</a>
+      <a href="./index.php?category=<?=$category?>"><?php if(isset($_GET['parent']) && $_GET['parent'] != '' && $_GET['parent'] !='index') {
+        echo '../';
+      ?><?=$_GET['parent']?></a> <?php
+      echo '/';
       }
-      else{
-        ?>
-        <h1 style="font-size:20pt;"><a href=".">Note-A-List</a></h1>
-        <?php
+     ?>
+      <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$category?>"> <?php if(isset($category) && $category != '') {
+        echo $_GET['newlist'];
       }
       ?>
-    <form action="Insert Action here" id = "newNoteForm">
+      </a>
+    </h1>
+    <form action="./index.php?category=<?=$category?>" id="newNoteForm" method="post">
     <h2> New Note </h2>
-    Title: <input type="text">
+    <div class="new-note">
+    <div class="title">
+    <label for="text">Title: </label>
+    <input name="title-text" type="title-text" id="title-text">
     <input type="submit" value="Save">
+    </div>
+    <textarea class="text-area" name="description" form="newNoteForm" placeholder="Enter text here..."></textarea>
+    </div>
     </form>
-    <textarea name="description" form="newNoteForm">Enter text here...</textarea>
-
-
-    </html>
     <?php
   }
 
