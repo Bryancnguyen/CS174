@@ -33,7 +33,7 @@ class PageController {
         if(isset($newCategory)) { //handles creating the actual category for new list page
           $this->categoriesModel = new \cs174\hw3\models\Category($newCategory, $_SESSION['selected_category']);
         }
-        if(isset($newTitle) || $newContent) {
+        if(isset($newTitle) && isset($newContent)) {
           $this->noteModel = new \cs174\hw3\models\Note($newTitle, $newContent, $_SESSION['selected_category']);
         }
       if (isset($_SESSION['selected_category'])) { //handles selected category
