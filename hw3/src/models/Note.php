@@ -89,7 +89,8 @@ class Note extends Model{
     *
     */
     private function getCategory() {
-        $sql = "SELECT idcategory FROM `notes` WHERE title='". $this->title ."'";
+        //SELECT name FROM `categories` WHERE id=(SELECT idparents FROM `categories` WHERE name='$title')
+        $sql = "SELECT name FROM `categories` WHERE id=(SELECT idcategory FROM `notes` WHERE title='". $this->title ."')";
         $mysqli = parent::connectTo("cs174hw3");
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error ."\n");
@@ -97,7 +98,7 @@ class Note extends Model{
         $cat = "";
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
-            $cat = $row["idcategory"];
+            $cat = $row["name"];
             // print("Category: $cat .\n");
             $result->free();
         }
