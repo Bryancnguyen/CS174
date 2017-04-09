@@ -54,6 +54,9 @@ class PageController {
     }
     else if(isset($_SESSION['newlist']))
     {
+      if(empty($_SESSION['newlist'])){
+        $_SESSION['newlist'] = 'index';
+      }
       //create new list by passing in parent and then parent
       $category = $_SESSION['newlist'];
       $this->newListView = new \cs174\hw3\views\newListView('WebLayout');
