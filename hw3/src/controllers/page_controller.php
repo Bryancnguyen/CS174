@@ -23,8 +23,9 @@ class PageController {
       $rootcategory = $this->categoriesModel->getSubs();
       $_SESSION['selected_category'] = $_GET['category'];
       $_SESSION['selected_notes'] = $_GET['notes'];
-      print  $_SESSION['selected_category'];
-      print $_SESSION['selected_notes'];
+      $_SESSION['parent'] = $_GET['parent'];
+      // print  $_SESSION['selected_category'];
+      // print $_SESSION['selected_notes'];
       if(isset($_SESSION['selected_category']) || isset($_SESSION['selected_notes']))
       {
       if (isset($_SESSION['selected_category'])) {
@@ -33,15 +34,16 @@ class PageController {
         $rootcategory = $this->categoriesModel->getSubs();
         $notes = $this->categoriesModel->getNotes();
         $this->categoryView = new \cs174\hw3\views\categoryView('WebLayout');
-        $this->categoryView->display($rootcategory, $notes);
+        $this->categoryView->display($rootcategory, $notes, $_SESSION['parent']);
       }
       if (isset($_SESSION['selected_notes'])) {
         $action = $_SESSION['selected_notes'];
         $noteModel = new \cs174\hw3\models\Note($action);
+        $rootcategory = $this->categoriesModel->getSubs();
         // $rootcategory = $this->noteModel->getSubs();
         // $notes = $this->categoriesModel->getNotes();
         $this->categoryView = new \cs174\hw3\views\noteView('WebLayout');
-        $this->categoryView->display($noteModel);
+        $this->categoryView->display($noteModel, $parent);
       }
     }
       else {
@@ -51,11 +53,7 @@ class PageController {
         // $this->newListView = new \cs174\hw3\views\newListView();
         // $this->newListView->render('Rich');
         $this->categoryView = new \cs174\hw3\views\categoryView('WebLayout');
-        $this->categoryView->display($rootcategory, $notes);
-
-        // $a = [1,2,3];
-        // $b = [1,2,3];
-        // $this->categoryView->render($a, $b);
+        $this->categoryView->display($rootcategory, $notes, $_SESSION['parent']);
       }
   }
 }

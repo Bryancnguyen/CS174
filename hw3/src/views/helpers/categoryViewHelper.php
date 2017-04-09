@@ -10,11 +10,11 @@ abstract class categoryViewHelper
         $layoutName = "\cs174\hw3\\views\layout\\" .$layout;
         $this->layout = new $layoutName($layout);
     }
-    public final function display($listArray = [], $noteArray =[])
+    public final function display($listArray = [], $noteArray =[], $parent)
     {
-        $this->layout->renderHeader($listArray, $noteArray);
-        $this->render($listArray, $noteArray);
-        $this->layout->renderFooter($listArray, $noteArray);
+        $this->layout->renderHeader($listArray, $noteArray, $parent);
+        $this->render($listArray, $noteArray, $parent);
+        $this->layout->renderFooter($listArray, $noteArray, $parent);
     }
-    public abstract function render($listArray = [], $noteArray =[]);
+    public abstract function render($listArray = [], $noteArray =[], $parent);
 }

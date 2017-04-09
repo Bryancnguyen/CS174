@@ -10,11 +10,11 @@ abstract class noteViewHelper
         $layoutName = "\cs174\hw3\\views\layout\\" .$layout;
         $this->layout = new $layoutName($layout);
     }
-    public final function display($note)
+    public final function display($note, $parent)
     {
-        $this->layout->renderHeader($note);
-        $this->render($note);
-        $this->layout->renderFooter($note);
+        $this->layout->renderHeader($note, $parent);
+        $this->render($note, $parent);
+        $this->layout->renderFooter($note, $parent);
     }
-    public abstract function render($note);
+    public abstract function render($note, $parent);
 }
