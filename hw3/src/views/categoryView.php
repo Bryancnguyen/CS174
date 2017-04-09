@@ -7,15 +7,16 @@ class categoryView extends \cs174\hw3\views\helpers\categoryViewHelper{
   function render($listArray =[], $noteArray =[], $parent){
     ?>
       <h1><a href="./index.php">Note-A-List/</a>
-        <a href="./index.php?category=<?=$parent?>"><?php if(isset($parent)) {
+        <a href="./index.php?category=<?=$parent?>"><?php if(isset($parent) && $parent != '') {
           echo '../';
         }
         ?><?=$parent?></a>
-        <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$parent?>"> <?php if(isset($parent)) {
+        <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$parent?>"> <?php if(isset($parent) && $parent != '') {
           echo '/';
+          echo $_SESSION['selected_category'];
         }
         ?>
-        <?=$_SESSION['selected_category']?></a>
+        </a>
       </h1>
       <div class="container">
         <div class="lists">
