@@ -34,6 +34,10 @@ class PageController {
           $this->categoriesModel = new \cs174\hw3\models\Category($newCategory, $_SESSION['selected_category']);
         }
         if(isset($newTitle) && isset($newContent)) {
+          if(!isset($_SESSION['selected_category']))
+          {
+            $_SESSION['selected_category'] = 'index';
+          }
           $this->noteModel = new \cs174\hw3\models\Note($newTitle, $newContent, $_SESSION['selected_category']);
         }
       if (isset($_SESSION['selected_category'])) { //handles selected category

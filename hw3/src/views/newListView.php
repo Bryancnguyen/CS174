@@ -13,7 +13,7 @@ class newListView extends \cs174\hw3\views\helpers\newListViewHelper {
       echo '/';
       }
      ?>
-      <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$category?>"> <?php if(isset($category) && $category != '') {
+      <a href="./index.php?category=<?=$_SESSION['selected_category']?>&parent=<?=$category?>"> <?php if(isset($category) && $category != '' && $_GET['parent'] !='index') {
         echo $_GET['newlist'];
       }
       ?>
