@@ -1,4 +1,5 @@
-Bryan Nguyen, Jack Wanke, Richard Papalia
+Names: Bryan Nguyen, Jack Wanke, Richard Papalia
+
 [x] All the web pages you output validate as XHTML 5.
 
 [x] Your project is written using namespaces. You only create variables, arrays, objects, define new classes, etc. in the namespace cool_name_for_your_group\hw3 and subnamespaces thereof.
