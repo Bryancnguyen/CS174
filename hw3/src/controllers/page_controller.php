@@ -24,10 +24,19 @@ class PageController {
       $_SESSION['selected_notes'] = $_GET['notes']; //show note page
       $_SESSION['newlist'] = $_GET['newlist']; //direct to new list page
       $_SESSION['newnote'] = $_GET['newnote']; //direct to new note page
-      $newCategory = $_POST['text']; //new category name for new list
+      if(isset($_POST['text']))
+      {
+      $newCategory = filter_var($_POST['text'], FILTER_SANITIZE_STRING); //new category name for new list
+      }
       $parent = ''; // set parent as blank in case of landing page
-      $newTitle = $_POST['title-text']; //new title for new note;
-      $newContent = $_POST['description']; //new content for new note
+      if(isset($_POST['title-text']))
+      {
+      $newTitle = filter_var($_POST['title-text'], FILTER_SANITIZE_STRING);  //new title for new note;
+      }
+      if(isset($_POST['description']))
+      {
+      $newContent = filter_var($_POST['description'], FILTER_SANITIZE_STRING); //new content for new note
+      }
       if(isset($_SESSION['selected_category']) || isset($_SESSION['selected_notes'])) //Only goes in if set
       {
         if(isset($newCategory)) { //handles creating the actual category for new list page
