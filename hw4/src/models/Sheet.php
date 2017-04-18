@@ -2,7 +2,7 @@
 
 namespace cs174\hw4\models;
 
-require_once("Model.php");
+require_once("C:/xampp/htdocs/hw4/src/models/Model.php");
 
 class Sheet extends Model{
 
@@ -23,16 +23,24 @@ class Sheet extends Model{
 
     public function __construct1($name){ //existing sheet
         $this->name = $name;
-        getAndSetFields();
+        $this->getAndSetFields();
     }
 
     public function __construct2($name, $data){ //new sheet
         $this->name = $name;
         $this->data = $data;
-        persist();
-        $this->id = getID();
+        $this->persist();
+        $mysqli = parent::connectTo("cs174hw4");
+        if ($mysqli->connect_errno) {
+            print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
+        }
+        $this->id = $this->getID($mysqli, $this->name);
         if($this->id > 0){
-            makeCodes($this->id);
+            $this->valid = true;
+            $this->makeCodes($this->id);
+        }
+        else{
+            $this->valid = false;
         }
     }
 
@@ -40,13 +48,14 @@ class Sheet extends Model{
     *  Saves the Sheet object to the database during instantiation.
     */
     private function persist(){
-        $sql = "INSERT INTO sheet (`name`, `data`) VALUES ('". $this->name ."', " . $this->data . ")";
+        $sql = "INSERT INTO sheet (`name`, `data`) VALUES ('". $this->name ."', '" . $this->data . "')";
         $mysqli = parent::connectTo("cs174hw4");
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        // print($result . "\n");
+        print($sql . "\n");
+        print("Res:". $result . "\n");
         $mysqli->close();
     }
 
@@ -55,16 +64,16 @@ class Sheet extends Model{
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
-        $this->id = getID($mysqli, $this->name);
+        $this->id = $this->getID($mysqli, $this->name);
+        print("Existing Sheet being Queried: ". $this->name ."\n");
         if($this->id < 0){
             $this->valid = false;
         }
         else {
             $this->valid = true;
-            $this->data = getData($mysqli, $this->name);
-            $this->codes = getCodes($mysqli, $this->id);
+            $this->data = $this->getData($mysqli, $this->name);
+            $this->codes = $this->getCodes($mysqli, $this->id);
         }
-        
         $mysqli->close();
     }
 
@@ -105,24 +114,24 @@ class Sheet extends Model{
         $sql = "SELECT * FROM `sheet_code` WHERE sheet_id='$id'";
         $codes = [];
         if($result = $mysqli->query($sql) ) {
-            while($row = $result->fetch_assoc()){
-                $hash_id = $row["id"];
-                $hash = $row["hash"];
-                $type = $row["type"];
-                $codes[] =  new \cs174\hw4\models\Sheet_Code($id, $hash_id, $hash, $type);
-                // print("Code: $id .\n");
-                $result->free();
+            foreach(range(0, $result->num_rows) as $num){
+                if($row = $result->fetch_assoc()){
+                    $hash_id = $row["id"];
+                    $hash = $row["hash"];
+                    $type = $row["type"];
+                    $codes[] =  new Sheet_Code($hash_id, $id, $hash, $type);
+                    // print("Code: $id .\n");
+                }
             }
-            
+            $result->free();
         }
         return $codes;
     }
 
     private function makeCodes($id){
-        $codes = [];
-        $codes[] = new \cs174\hw4\Sheet_Code($this->id, substr(md5($id . "read"), 0, 8), "read");
-        $codes[] = new \cs174\hw4\Sheet_Code($this->id, substr(md5($id . "edit"), 0, 8), "edit");
-        $codes[] = new \cs174\hw4\Sheet_Code($this->id, substr(md5($id . "file"), 0, 8), "file");
+        $codes[] = new Sheet_Code($id, substr(md5($id . "read"), 0, 8), "read");
+        $codes[] = new Sheet_Code($id, substr(md5($id . "edit"), 0, 8), "edit");
+        $codes[] = new Sheet_Code($id, substr(md5($id . "file"), 0, 8), "file");
         return $codes;
     }
 }

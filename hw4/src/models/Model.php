@@ -1,7 +1,7 @@
 <?php
 
 namespace cs174\hw4\models;
-require_once('./src/configs/Config.php');
+require_once('C:/xampp/htdocs/hw4/src/configs/Config.php');
 use cs174\hw4\configs as C;
 
 class Model {
@@ -12,7 +12,7 @@ class Model {
 
     // \cs174\hw3\configs\DB_USR == C\DB_USR ?
 
-	public function __construct($db_usr =\cs174\hw3\configs\DB_USR, $db_pwd =\cs174\hw3\configs\DB_PWD, $db_prt = \cs174\hw3\configs\DB_PRT)
+	public function __construct($db_usr =C\DB_USR, $db_pwd =C\DB_PWD, $db_prt = C\DB_PRT)
     {
         $this->db_usr = $db_usr;
         $this->db_pwd = $db_pwd;
