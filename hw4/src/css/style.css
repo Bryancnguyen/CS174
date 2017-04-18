@@ -1,0 +1,117 @@
+* {
+  margin: 0px;
+}
+
+html, body {
+   height: 100%;
+   width: 100%;
+   overflow: auto;
+}
+
+body {
+    background: #66BB6A; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#66BB6A, #FFEE58); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#66BB6A, #FFEE58); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#66BB6A, #FFEE58); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#66BB6A, #FFEE58); /* Standard syntax */  
+}
+
+h1 {
+    margin: 0 auto;
+    width: 400px;
+    padding-top: 40px;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #00897B;
+}
+h1 a {
+    color: #2c3e50;
+    text-decoration: none;
+    letter-spacing: 5px;
+    font-family: 'Lobster', cursive;
+    font-size: 70px;
+}
+h1 a:hover {
+    color: #34495e;
+}
+
+.name-code-wrapper {
+    margin: 0 auto;
+    width: 400px;
+    padding-top: 20px;
+}
+
+.name-code-field, .edit-url, .file-url, .read-url {
+    width: 300px;
+    height: 30px;
+    border: 1px solid green;
+    font-size: 15px;
+    padding-left: 8px;
+    border-radius: 5px;
+}
+
+.go-button {
+    margin-left: 20px;
+    width: 60px;
+    display: inline-block;
+    padding: 3px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #333;
+    background-color: #fff;
+    border-color: green;
+}
+
+.go-button:hover {
+    color: #333;
+    background-color: #2ecc71;
+}
+
+.url-wrapper {
+    width: 334px;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+.edit-url, .file-url, .read-url {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.input-labels 
+{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #616161;
+    font-size: 25px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+table, table th, table td {
+    border: 1px solid #00897B;
+    text-align: right;
+}
+table th {
+  font-weight: 100;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    margin-top: 40px;
+    margin-left: 100px;
+    width: 300px;
+    margin-bottom: 40px;
+}
