@@ -1,0 +1,3 @@
+<!ELEMENT spreadsheet (row*)>
+<!ELEMENT row (col*)>
+<!ELEMENT col (#PCDATA)>
