@@ -2,7 +2,7 @@
 
 namespace cs174\hw4\models;
 
-require_once("Model.php");
+require_once("C:/xampp/htdocs/hw4/src/models/Model.php");
 
 class Sheet_Code extends Model{
 
@@ -17,20 +17,31 @@ class Sheet_Code extends Model{
         $a = func_get_args(); 
         $i = func_num_args(); 
         if (method_exists($this,$f='__construct'.$i)) { 
-            call_user_func_array(array($this,$f),$a); 
+            \call_user_func_array(array($this,$f),$a); 
         } 
     }
 
     public function __construct1($hash_code){ //existing sheet
         $this->hash_code = $hash_code;
+        $this->getAndSetFields();
     }
 
     public function __construct3($sheet_id, $hash_code, $code_type){ //new sheet
         $this->sheet_id = $sheet_id;
         $this->hash_code = $hash_code;
         $this->code_type = $code_type;
-        persist();
-        $this->id = getID();
+        $this->persist();
+        $mysqli = parent::connectTo("cs174hw4");
+        if ($mysqli->connect_errno) {
+            print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
+        }
+        $this->id = $this->getID($mysqli, $this->hash_code);
+        if($this->id > 0){
+            $this->valid = true;
+        }
+        else{
+            $this->valid = false;
+        }
     }
 
     public function __construct4($id, $sheet_id, $hash_code, $code_type){
@@ -50,7 +61,8 @@ class Sheet_Code extends Model{
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        // print($result . "\n");
+        print($sql . "\n");
+        print("Res:". $result . "\n");
         $mysqli->close();
     }
 
@@ -64,7 +76,8 @@ class Sheet_Code extends Model{
             $this->valid = false;
         }
         else {
-            $this->code_type = getType($mysqli, $this->id);
+            $this->valid = true;
+            $this->code_type = $this->getType($mysqli, $this->id);
         }
         
         $mysqli->close();
@@ -88,15 +101,15 @@ class Sheet_Code extends Model{
     /**
     *  Retrieves the ID of the category title.
     */
-    private function getType($mysqli, $id){
-        $sql = "SELECT type FROM `sheet_code` WHERE id=$id";
-        $data = -1;
+    private function getType($mysqli, $hash_code){
+        $sql = "SELECT type FROM `sheet_code` WHERE hash=$hash_code";
+        $type= -1;
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
-            $data = $row["data"];
+            $type = $row["type"];
             // print("Data: $data .\n");
             $result->free();
         }
-        return $data;
+        return $type;
     }
 }

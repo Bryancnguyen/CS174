@@ -2,11 +2,13 @@
 
 namespace cs174\hw4\init;
 
-require_once("Config.php");
+use \cs174\hw4\configs as C;
 
-require_once("/../models/Sheet.php");
-require_once("/../models/Sheet_Code.php");
-$mysqli = new \mysqli( "127.0.0.1:".\cs174\hw4\configs\DB_PRT, \cs174\hw4\configs\DB_USR, \cs174\hw4\configs\DB_PWD); // configs namespace
+require_once("C:/xampp/htdocs/hw4/src/configs/Config.php");
+require_once("C:/xampp/htdocs/hw4/src/models/Sheet.php");
+require_once("C:/xampp/htdocs/hw4/src/models/Sheet_Code.php");
+
+$mysqli = new \mysqli( "127.0.0.1:".C\DB_PRT, C\DB_USR, C\DB_PWD); // configs namespace
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
@@ -15,15 +17,15 @@ $preps = [
 "CREATE DATABASE IF NOT EXISTS `cs174hw4`",
 "USE `cs174hw4`",
 "CREATE TABLE IF NOT EXISTS `cs174hw4`.`sheet`
-(id INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(45) NOT NULL, `data` JSON NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB",
+(id INT NOT NULL AUTO_INCREMENT, `name` VARCHAR(255) NOT NULL, `data` LONGTEXT NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB",
 "CREATE TABLE IF NOT EXISTS `cs174hw4`.`sheet_code`
 (id INT NOT NULL AUTO_INCREMENT, sheet_id INT NOT NULL, `hash` VARCHAR(8) NOT NULL, `type` VARCHAR(4) NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB"
 ];
 
 foreach($preps as $prep){
-	print("Executing: $prep ;\n");
+	print("$prep ;\n");
 	$result = \mysqli_query($mysqli,$prep);
-	print("Result: $result \n");
+	print("Res: $result \n");
 }
 $mysqli->close();
 
@@ -46,7 +48,5 @@ if($another_ref_to_sheet_one->valid){
 		print("code_type: ". $code->code_type ."\n"); // "read" || "edit" || "file"
 	}
 }
-
-
-
-print()
+else
+	print("Looks like that wasn't a valid DB object.");
