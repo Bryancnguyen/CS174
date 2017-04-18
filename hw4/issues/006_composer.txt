@@ -1,0 +1,1 @@
+Follow instructions listed here to install and use composer: https://www.codementor.io/php/tutorial/composer-install-php-dependency-manager
