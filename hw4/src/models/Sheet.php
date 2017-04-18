@@ -4,7 +4,7 @@ namespace cs174\hw4\models;
 
 require_once("Model.php");
 
-class Category extends Model{
+class Sheet extends Model{
 
     public $valid;
     public $id;
@@ -23,6 +23,7 @@ class Category extends Model{
 
     public function __construct1($name){ //existing sheet
         $this->name = $name;
+        getAndSetFields();
     }
 
     public function __construct2($name, $data){ //new sheet
@@ -30,6 +31,9 @@ class Category extends Model{
         $this->data = $data;
         persist();
         $this->id = getID();
+        if($this->id > 0){
+            makeCodes($this->id);
+        }
     }
 
     /**
@@ -56,6 +60,7 @@ class Category extends Model{
             $this->valid = false;
         }
         else {
+            $this->valid = true;
             $this->data = getData($mysqli, $this->name);
             $this->codes = getCodes($mysqli, $this->id);
         }
@@ -101,10 +106,10 @@ class Category extends Model{
         $codes = [];
         if($result = $mysqli->query($sql) ) {
             while($row = $result->fetch_assoc()){
-                $type = $row["type"];
+                $hash_id = $row["id"];
                 $hash = $row["hash"];
-                $codes[] =  new \cs174\hw4\models\Sheet_Code();
-
+                $type = $row["type"];
+                $codes[] =  new \cs174\hw4\models\Sheet_Code($id, $hash_id, $hash, $type);
                 // print("Code: $id .\n");
                 $result->free();
             }
@@ -115,13 +120,9 @@ class Category extends Model{
 
     private function makeCodes($id){
         $codes = [];
-        $codes["read"] = md5($id . "read");
-        $codes["edit"] = md5($id . "edit");
-        $codes["file"] = md5($id . "file");
+        $codes[] = new \cs174\hw4\Sheet_Code($this->id, substr(md5($id . "read"), 0, 8), "read");
+        $codes[] = new \cs174\hw4\Sheet_Code($this->id, substr(md5($id . "edit"), 0, 8), "edit");
+        $codes[] = new \cs174\hw4\Sheet_Code($this->id, substr(md5($id . "file"), 0, 8), "file");
         return $codes;
-    }
-
-    private function storeCodes($codes){
-        
     }
 }
