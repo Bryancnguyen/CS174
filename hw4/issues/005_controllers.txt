@@ -1,0 +1,9 @@
+1) If on the landing page a user enters a hash_code of type "read", they should be taken to 
+the Read Sheet Page and the spreadsheet corresponding to that code should be displayed.
+
+2) If on the landing page, a user enters a hash_code of type "file", the spreadsheet should be 
+displayed as an XML file that conforms to the edit given by spreadsheet.dtd. The grader will verify 
+this using oXygen.
+
+3) If one enters the Edit Url, Read Url, or File Url's directly in the browser url bar one should 
+be taken to the correct page with respect to the current spreadsheet.
