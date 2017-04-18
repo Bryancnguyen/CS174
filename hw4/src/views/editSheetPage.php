@@ -8,6 +8,8 @@ class editSheetPage extends H\editPageHelper {
     function render($data)
     {
         ?>
+        <body onload="loadEditSheet()">
+          <div class="websheets-body">
         <form>
         <h1><a class="websheet-link" href='./index.php'>Web Sheets:</a></br>Your Spreadsheet Name</h1>
         <div class="url-wrapper">
@@ -18,14 +20,11 @@ class editSheetPage extends H\editPageHelper {
         <label class="input-labels" for="file-url">File Url:</label>
         <input type="text" name="file-url" class="file-url" />
         </div>
-        <table>
-            <tr><th>&nbsp;</th><th>A<button>+</button></th><th>B</th><th>C</th></tr>
-            <tr><th><button>-</button>1<button>+</button></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><th><button>-</button>2<button>+</button></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><th><button>-</button>3<button>+</button></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><th><button>-</button>4<button>+</button></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        </table>
+        <div id="web-sheet-data">
+        </div>
         </form>
+        </div>
+        </body>
 <?php
     }
 }

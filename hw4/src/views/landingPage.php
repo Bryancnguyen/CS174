@@ -8,6 +8,8 @@ class landingPage extends H\landingPageHelper {
     function render($data)
     {
         ?>
+        <body>
+          <div class="websheets-body">
         <form action="" method="POST">
         <h1><a class="websheet-link" href='./index.php'>Web Sheets</a></h1>
         <div class="name-code-wrapper">
@@ -15,6 +17,8 @@ class landingPage extends H\landingPageHelper {
         <input type="submit" name="button" class="go-button" value="Go"/>
         </div>
         </form>
+        </div>
+        </body>
     <?php 
     }
 }

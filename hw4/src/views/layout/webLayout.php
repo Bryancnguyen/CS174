@@ -16,8 +16,6 @@ public function renderHeader($data)
           <link rel="stylesheet" type="text/css" href="./src/css/style.css"/>
           <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Lobster" rel="stylesheet">
         </head>
-        <body>
-          <div class="websheets-body">
         <?php
     }
 
@@ -25,7 +23,7 @@ public function renderHeader($data)
     {
         ?>
        </div>
-      </body>
+      <script src="./src/js/script.js"></script>
       </html>
         <?php
     }

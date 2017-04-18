@@ -13,5 +13,9 @@ class PageController {
     $data = '';
     $this->landingView = new V\landingPage('WebLayout');
     $this->landingView->display($data);
+    // $this->editSheetView = new V\editSheetPage('WebLayout');
+    // $this->editSheetView->display($data);
+    // $this->readSheetView = new V\readSheetPage('WebLayout');
+    // $this->readSheetView->display($data);
     }
 }
