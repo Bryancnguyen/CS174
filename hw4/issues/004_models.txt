@@ -1,0 +1,5 @@
+Spreadsheets should be stored as JSON encoded arrays in a MySQL database in the backend. 
+This database should have all its tables in BCNF. You should have at a minimum two tables: 
+
+1) SHEET(sheet_id, sheet_name, sheet_data)
+2) SHEET_CODES(sheet_id, hash_code, code_type).

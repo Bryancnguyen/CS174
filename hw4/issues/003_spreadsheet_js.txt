@@ -1,0 +1,11 @@
+1) spreadsheet.js should be modified so that editing a field in spreadsheet sends an XmlHttpRequest 
+back to your app to update the field in the database. Data should be sent as JSON, and the controller 
+called should be ApiController (use c=api in the url). This should be testable on the Edit Sheet Page.
+
+2) spreadsheet.js should be modified so that when a using clicks on an editable cell rather than a prompt 
+being used to get a new value the cell itself should be highlighted and a value can be entered in it 
+(more like a traditional spreadsheet like Excel).
+
+3) Currently, cells with expressions like =A1 or =((A1 + B1) * C3) will be evaluated and the value will 
+be drawn. spreadsheet.js should be extended to accept expressions like =avg(A1:A10) which would compute 
+the average value of A1, A2, ...., A10.

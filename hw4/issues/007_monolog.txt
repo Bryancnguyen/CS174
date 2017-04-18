@@ -1,0 +1,4 @@
+1) The backend of your project is required to be developed in PHP using composer. You should have 
+a composer.json file which requires monolog/monolog
+2) You should use Monolog to write a log entry to the file spread.log in this folder each time a 
+user visits the Landing page, an Edit Sheet Page, or a Read Sheet page. You can log additional things as you like.

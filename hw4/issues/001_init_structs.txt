@@ -1,0 +1,5 @@
+The initial project structure should be created, along with class skeletons.
+
+1) Models (cs174\hw4\models)
+2) Controllers (cs174\hw4\controllers)
+3) Views (cs174\hw4\views)

@@ -1,0 +1,13 @@
+Create initial versions of the necessary models, controllers, and views in order to display the first version of 
+the home page. 
+
+1) Models
+  * SHEET(sheet_id, sheet_name, sheet_data)
+  * SHEET_CODES(sheet_id, hash_code, code_type)
+
+2) Controllers
+  * index controller?
+
+3) Views
+  * index view? 
+  * spreadsheet.js
