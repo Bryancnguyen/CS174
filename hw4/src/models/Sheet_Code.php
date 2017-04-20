@@ -2,7 +2,7 @@
 
 namespace cs174\hw4\models;
 
-require_once("C:/xampp/htdocs/hw4/src/models/Model.php");
+// require_once("C:/xampp/htdocs/hw4/src/models/Model.php");
 
 class Sheet_Code extends Model{
 

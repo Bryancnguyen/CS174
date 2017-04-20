@@ -1,6 +1,6 @@
 <?php
 namespace cs174\hw4\views\layout;
-require_once ('layout.php');
+// require_once ('layout.php');
 
 class WebLayout extends Layout {
 
