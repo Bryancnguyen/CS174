@@ -1,7 +1,7 @@
 <?php 
 
 namespace cs174\hw4\views;
-require_once './src/views/helpers/editPageHelper.php';
+// require_once './src/views/helpers/editPageHelper.php';
 use \cs174\hw4\views\helpers as H;
 
 class editSheetPage extends H\editPageHelper {

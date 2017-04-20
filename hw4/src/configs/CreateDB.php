@@ -4,9 +4,9 @@ namespace cs174\hw4\init;
 
 use \cs174\hw4\configs as C;
 
-require_once("C:/xampp/htdocs/hw4/src/configs/Config.php");
-require_once("C:/xampp/htdocs/hw4/src/models/Sheet.php");
-require_once("C:/xampp/htdocs/hw4/src/models/Sheet_Code.php");
+// require_once("C:/xampp/htdocs/hw4/src/configs/Config.php");
+// require_once("C:/xampp/htdocs/hw4/src/models/Sheet.php");
+// require_once("C:/xampp/htdocs/hw4/src/models/Sheet_Code.php");
 
 $mysqli = new \mysqli( "127.0.0.1:".C\DB_PRT, C\DB_USR, C\DB_PWD); // configs namespace
 if ($mysqli->connect_errno) {

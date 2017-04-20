@@ -1,7 +1,7 @@
 <?php 
 
 namespace cs174\hw4\views;
-require_once './src/views/helpers/readPageHelper.php';
+// require_once './src/views/helpers/readPageHelper.php';
 use \cs174\hw4\views\helpers as H;
 
 class readSheetPage extends H\readPageHelper {
