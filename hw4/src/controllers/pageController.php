@@ -9,12 +9,29 @@ use \cs174\hw4\views as V;
 
 class PageController {
     private $data;
+    private $landingView;
     function render() {
-    $data = ''; //Create An Instance of the data model
 
-    //Check if the posted value from landingPage.php is already in the data model, if it is pass that object to viewHelper
+    if(isset($_POST['userInput'])) //Check if the user actually put any input
+    {
+      $inputString = filter_var($_POST['userInput'], FILTER_SANITIZE_STRING); // Get the users input in a string
+      $this->data = new \cs174\hw4\models\Sheet($inputString); //Create a sheet with the users input name
 
-    //If it is not then create that object and pass it to the view.
+      if($data->valid){ //If this sheet is already in the database
+        $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
+        $this->editSheetView->display($data);//Pass the data to View
+      }
+      else{
+        $sheet_to_pass = new \cs174\hw4\models\Sheet("sheet_one", '{[ ["Tom", "Sally"] ]}');
+        $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
+        $this->editSheetView->display($data);//Pass the data to View
+      }
+    }
+    else{
+      $data = '';
+      $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
+      $this->editSheetView->display($data);//Pass the data to View
+    }
 
 
     // $this->landingView = new V\landingPage('WebLayout');
