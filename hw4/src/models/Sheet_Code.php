@@ -27,7 +27,7 @@ class Sheet_Code extends Model{
         $this->getAndSetFields();
     }
 
-    public function __construct3($sheet_id, $sheet_name, $hash_code, $code_type){ //new sheet
+    public function __construct4($sheet_id, $sheet_name, $hash_code, $code_type){ //new sheet
         $this->sheet_id = $sheet_id;
         $this->sheet_name = $sheet_name;
         $this->hash_code = $hash_code;
@@ -46,9 +46,10 @@ class Sheet_Code extends Model{
         }
     }
 
-    public function __construct4($id, $sheet_id, $hash_code, $code_type){
+    public function __construct5($id, $sheet_id, $sheet_name, $hash_code, $code_type){
         $this->id = $id;
         $this->sheet_id = $sheet_id;
+        $this->sheet_name = $sheet_name;
         $this->hash_code = $hash_code;
         $this->code_type = $code_type;
     }
@@ -57,7 +58,7 @@ class Sheet_Code extends Model{
     *  Saves the Sheet object to the database during instantiation.
     */
     private function persist(){
-        $sql = "INSERT INTO sheet_code (`sheet_id`, `hash`, `type`) VALUES (". $this->sheet_id .", '". $this->hash_code ."', '". $this->code_type ."')";
+        $sql = "INSERT INTO sheet_code (`sheet_id`, `sheet_name`, `hash`, `type`) VALUES (". $this->sheet_id .", '". $this->sheet_name .", '". $this->hash_code ."', '". $this->code_type ."')";
         $mysqli = parent::connectTo("cs174hw4");
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");

@@ -72,7 +72,7 @@ class Sheet extends Model{
         else {
             $this->valid = true;
             $this->data = $this->getData($mysqli, $this->name);
-            $this->codes = $this->getCodes($mysqli, $this->id);
+            $this->codes = $this->getCodes($mysqli, $this->id, $this->name);
         }
         $mysqli->close();
     }
@@ -110,7 +110,7 @@ class Sheet extends Model{
     /**
     *  Retrieves the hash codes for the sheet with the given ID.
     */
-    private function getCodes($mysqli, $id){
+    private function getCodes($mysqli, $id, $name){
         $sql = "SELECT * FROM `sheet_code` WHERE sheet_id='$id'";
         $codes = [];
         if($result = $mysqli->query($sql) ) {
@@ -119,7 +119,7 @@ class Sheet extends Model{
                     $hash_id = $row["id"];
                     $hash = $row["hash"];
                     $type = $row["type"];
-                    $codes[] =  new Sheet_Code($hash_id, $id, $hash, $type);
+                    $codes[] =  new Sheet_Code($hash_id, $id, $name, $hash, $type);
                     // print("Code: $id .\n");
                 }
             }
