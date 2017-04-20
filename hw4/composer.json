@@ -1,12 +1,15 @@
 {
     "require": {
-            "monolog/monolog": "^1.0",
+            "monolog/monolog": "^1.0"
     },
     "autoload": {
     		"psr-4": {
-    			"cs174\\hw4\\models": "src/models",
-    			"cs174\\hw4\\views": "src/views",
-    			"cs174\\hw4\\controllers": "src/controllers"
+    			"cs174\\hw4\\models\\": "src/models",
+    			"cs174\\hw4\\controllers\\": "src/controllers",
+                "cs174\\hw4\\configs\\": "src/configs",
+                "cs174\\hw4\\views\\": "src/views",
+                "cs174\\hw4\\views\\helpers\\": "src/views/helpers",
+                "cs174\\hw4\\views\\layout\\": "src/views/layout"
     		}
 	}
 }

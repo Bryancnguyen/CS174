@@ -2,7 +2,7 @@
 
 namespace cs174\hw4\models;
 
-require_once("C:/xampp/htdocs/hw4/src/models/Model.php");
+// require_once("C:/xampp/htdocs/hw4/src/models/Model.php");
 
 class Sheet extends Model{
 
@@ -37,7 +37,7 @@ class Sheet extends Model{
         $this->id = $this->getID($mysqli, $this->name);
         if($this->id > 0){
             $this->valid = true;
-            $this->makeCodes($this->id);
+            $this->makeCodes($this->id, $this->name);
         }
         else{
             $this->valid = false;
@@ -128,10 +128,10 @@ class Sheet extends Model{
         return $codes;
     }
 
-    private function makeCodes($id){
-        $codes[] = new Sheet_Code($id, substr(md5($id . "read"), 0, 8), "read");
-        $codes[] = new Sheet_Code($id, substr(md5($id . "edit"), 0, 8), "edit");
-        $codes[] = new Sheet_Code($id, substr(md5($id . "file"), 0, 8), "file");
+    private function makeCodes($id, $name){
+        $codes[] = new Sheet_Code($id, $name, substr(md5($id . "read"), 0, 8), "read");
+        $codes[] = new Sheet_Code($id, $name, substr(md5($id . "edit"), 0, 8), "edit");
+        $codes[] = new Sheet_Code($id, $name, substr(md5($id . "file"), 0, 8), "file");
         return $codes;
     }
 }

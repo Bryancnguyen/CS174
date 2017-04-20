@@ -1,9 +1,9 @@
 <?php
 namespace cs174\hw4\controllers;
 
-require_once('./src/views/landingPage.php');
-require_once('./src/views/editSheetPage.php');
-require_once('./src/views/readSheetPage.php');
+// require_once('./src/views/landingPage.php');
+// require_once('./src/views/editSheetPage.php');
+// require_once('./src/views/readSheetPage.php');
 
 use \cs174\hw4\views as V;
 

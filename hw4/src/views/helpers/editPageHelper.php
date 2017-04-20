@@ -1,6 +1,6 @@
 <?php
 namespace cs174\hw4\views\helpers;
-require_once ('./src/views/layout/webLayout.php');
+// require_once ('./src/views/layout/webLayout.php');
 
 abstract class editPageHelper
 {

@@ -1,7 +1,7 @@
 <?php
 
 namespace cs174\hw4\models;
-require_once('C:/xampp/htdocs/hw4/src/configs/Config.php');
+// require_once('C:/xampp/htdocs/hw4/src/configs/Config.php');
 use cs174\hw4\configs as C;
 
 class Model {
