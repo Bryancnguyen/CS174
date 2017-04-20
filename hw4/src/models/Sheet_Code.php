@@ -9,6 +9,7 @@ class Sheet_Code extends Model{
     public $valid;
     public $id;
     public $sheet_id;
+    public $sheet_name;
     public $hash_code; 
     public $code_type;
 
@@ -26,8 +27,9 @@ class Sheet_Code extends Model{
         $this->getAndSetFields();
     }
 
-    public function __construct3($sheet_id, $hash_code, $code_type){ //new sheet
+    public function __construct3($sheet_id, $sheet_name, $hash_code, $code_type){ //new sheet
         $this->sheet_id = $sheet_id;
+        $this->sheet_name = $sheet_name;
         $this->hash_code = $hash_code;
         $this->code_type = $code_type;
         $this->persist();
@@ -77,10 +79,26 @@ class Sheet_Code extends Model{
         }
         else {
             $this->valid = true;
-            $this->code_type = $this->getType($mysqli, $this->id);
+            $this->getFields();
         }
         
         $mysqli->close();
+    }
+
+    /**
+    *  Retrieves the ID of the category title.
+    */
+    private function getFields($mysqli, $hash_code){
+        $sql = "SELECT * FROM `sheet_code` WHERE hash=$hash_code";
+        if($result = $mysqli->query($sql) ) {
+            $row = $result->fetch_assoc();
+            $this->id = $row["id"];
+            $this->sheet_id = $row["sheet_id"];
+            $this->sheet_name = $row["sheet_name"];
+            $this->code_type = $row["type"];
+            // print("ID: $id .\n");
+            $result->free();
+        }
     }
 
     /**
