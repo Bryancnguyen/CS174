@@ -2,7 +2,7 @@
 
 namespace cs174\hw4\models;
 // require_once('C:/xampp/htdocs/hw4/src/configs/Config.php');
-use cs174\hw4\configs as C;
+use \cs174\hw4\configs as C;
 
 class Model {
 
@@ -12,11 +12,12 @@ class Model {
 
     // \cs174\hw3\configs\DB_USR == C\DB_USR ?
 
-	public function __construct($db_usr =C\DB_USR, $db_pwd =C\DB_PWD, $db_prt = C\DB_PRT)
+	public function __construct()
     {
-        $this->db_usr = $db_usr;
-        $this->db_pwd = $db_pwd;
-        $this->db_prt = $db_prt;
+        $C = new C\Config();
+        $this->db_usr = $C->DB_USR;
+        $this->db_pwd = $C->DB_PWD;
+        $this->db_prt = $C->DB_PRT;
     }
 
     public function connect(){

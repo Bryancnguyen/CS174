@@ -74,7 +74,7 @@ class Sheet_Code extends Model{
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
-        $this->id = getID($mysqli, $this->hash_code);
+        $this->id = $this->getID($mysqli, $this->hash_code);
         if($this->id < 0){
             $this->valid = false;
         }

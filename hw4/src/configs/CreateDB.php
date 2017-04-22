@@ -1,14 +1,13 @@
 <?php
 
-namespace cs174\hw4\init;
 require_once("Config.php");
 use \cs174\hw4\configs as C;
 
 // 
 // require_once("C:/xampp/htdocs/hw4/src/models/Sheet.php");
 // require_once("C:/xampp/htdocs/hw4/src/models/Sheet_Code.php");
-
-$mysqli = new \mysqli( "127.0.0.1:".C\DB_PRT, C\DB_USR, C\DB_PWD); // configs namespace
+$C = new C\Config();
+$mysqli = new \mysqli( "127.0.0.1:".$C->DB_PRT, $C->DB_USR, $C->DB_PWD); // configs namespace
 if ($mysqli->connect_errno) {
     echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
