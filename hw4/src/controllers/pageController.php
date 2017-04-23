@@ -34,7 +34,7 @@ class PageController {
       }
 
       else{
-        $sheet_to_pass = new M\Sheet($inputString, '{[ ["Tom", "Sally"] ]}');
+        $sheet_to_pass = new M\Sheet($inputString, '[ ["Tom", "Sally"] ]');
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($data);//Pass the data to View
       }
