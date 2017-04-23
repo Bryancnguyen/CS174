@@ -7,6 +7,7 @@ use \cs174\hw4\views\helpers as H;
 class readSheetPage extends H\readPageHelper {
     function render($data)
     {
+        echo $data;
         ?>
         <body onload="loadReadSheet()">
           <div class="websheets-body">

@@ -58,14 +58,14 @@ class Sheet_Code extends Model{
     *  Saves the Sheet object to the database during instantiation.
     */
     private function persist(){
-        $sql = "INSERT INTO sheet_code (`sheet_id`, `sheet_name`, `hash`, `type`) VALUES (". $this->sheet_id .", '". $this->sheet_name .", '". $this->hash_code ."', '". $this->code_type ."')";
+        $sql = "INSERT INTO sheet_code (`sheet_id`, `sheet_name`, `hash`, `type`) VALUES (". $this->sheet_id .", '". $this->sheet_name ."', '". $this->hash_code ."', '". $this->code_type ."')";
         $mysqli = parent::connectTo("cs174hw4");
         if ($mysqli->connect_errno) {
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        print($sql . "\n");
-        print("Res:". $result . "\n");
+        // print($sql . "\n");
+        // print("Res:". $result . "\n");
         $mysqli->close();
     }
 
@@ -80,7 +80,7 @@ class Sheet_Code extends Model{
         }
         else {
             $this->valid = true;
-            $this->getFields();
+            $this->getFields($mysqli, $this->hash_code);
         }
         
         $mysqli->close();
@@ -90,7 +90,7 @@ class Sheet_Code extends Model{
     *  Retrieves the ID of the category title.
     */
     private function getFields($mysqli, $hash_code){
-        $sql = "SELECT * FROM `sheet_code` WHERE hash=$hash_code";
+        $sql = "SELECT * FROM `sheet_code` WHERE hash='$hash_code'";
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
             $this->id = $row["id"];
@@ -106,7 +106,7 @@ class Sheet_Code extends Model{
     *  Retrieves the ID of the category title.
     */
     private function getID($mysqli, $hash_code){
-        $sql = "SELECT id FROM `sheet_code` WHERE hash=$hash_code";
+        $sql = "SELECT id FROM `sheet_code` WHERE hash='$hash_code'";
         $id = -1;
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
@@ -117,8 +117,7 @@ class Sheet_Code extends Model{
             }
             $result->free();
         }
-        print("ID: $id .\n");
-
+        // print("ID: $id .\n");
         return $id;
     }
 
@@ -126,7 +125,7 @@ class Sheet_Code extends Model{
     *  Retrieves the ID of the category title.
     */
     private function getType($mysqli, $hash_code){
-        $sql = "SELECT type FROM `sheet_code` WHERE hash=$hash_code";
+        $sql = "SELECT type FROM `sheet_code` WHERE hash='$hash_code'";
         $type= -1;
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();

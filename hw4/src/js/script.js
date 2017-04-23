@@ -325,7 +325,12 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
 function loadEditSheet() {
     var editSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
     editSheet.mode = 'write';
-    editSheet.draw();
+    editSheet.draw(); 
+    document.getElementById("web-sheet-data").addEventListener("click", function(){
+    var updateSheet = new Spreadsheet('web-sheet-data', [["Tom",5],["Sally", 6]])
+    updateSheet.mode = 'write';
+    updateSheet.updateCell(event);
+});
 }
 
 function loadReadSheet() {
@@ -334,9 +339,12 @@ function loadReadSheet() {
     readSheet.draw();
 }
 
-document.getElementById("web-sheet-data").addEventListener("click", function(){
-    var updateSheet = new Spreadsheet('web-sheet-data', [["Tom",5],["Sally", 6]])
-    updateSheet.mode = 'write';
-    updateSheet.updateCell(event);
-});
-
+function checkIfEmpty() {
+    var inputField = document.getElementById('name-code-field').value;
+    console.log(inputField);
+    if(!inputField || !inputField.match(/^[a-z0-9]+$/i))
+    {
+        event.preventDefault();
+        alert('Please Enter a Valid Input');
+    }
+}

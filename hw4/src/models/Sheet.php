@@ -117,7 +117,7 @@ class Sheet extends Model{
     *  Retrieves the hash codes for the sheet with the given ID.
     */
     private function getCodes($mysqli, $id, $name){
-        $sql = "SELECT * FROM `sheet_code` WHERE sheet_id='$id'";
+        $sql = "SELECT * FROM `sheet_code` WHERE sheet_id=$id";
         $codes = [];
         if($result = $mysqli->query($sql) ) {
             foreach(range(0, $result->num_rows) as $num){
