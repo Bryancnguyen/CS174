@@ -141,6 +141,10 @@ class Sheet extends Model{
         return $codes;
     }
 
+    public function XML(){
+        $this->makeXML($this->data);
+    }
+
     private function makeXML($data){
         $dat_arr = json_decode($data);
         $xml_str = "";
@@ -153,7 +157,21 @@ class Sheet extends Model{
         }
         $xml = simplexml_load_string($xml_str);
         if($xml !== false){
-            //dump xml
+            //dump xml to file
+            $file = "data.xml";
+            if(file_put_contents($file, $xml_str)){
+                //send over http
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename="'.basename($file).'"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                exit;
+            }
+            
         }
     }
 }

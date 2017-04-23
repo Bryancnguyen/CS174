@@ -15,7 +15,10 @@ class PageController {
 
     function render() {
 
-    $code = $_GET['arg1'];
+    $code = "";
+    if(isset($_GET['arg1'])){
+      $code = $_GET['arg1'];
+    }
 
     if($code){ //If they entered the hashcode in the browser
       $sheetCode = new M\Sheet_Code($code);
@@ -37,7 +40,9 @@ class PageController {
         }
         else
         {
-
+          $sheetName = $sheetCode->sheet_name; //Get the name of the sheet which corresponds to the sheet_data
+          $sheet = new M\Sheet($sheetName); //create a sheet object to pass to view
+          $sheet->XML();
         }
 
       }
@@ -78,9 +83,11 @@ class PageController {
           $this->readView = new V\readSheetPage('WebLayout');//Create the view
           $this->readView->display($dataToPass);//Pass the data to View
         }
-        else
+        else //file view
         {
-
+          $sheetName = $sheetCode->sheet_name; //Get the name of the sheet which corresponds to the sheet_data
+          $sheet = new M\Sheet($sheetName); //create a sheet object to pass to view
+          $sheet->XML();
         }
       }
 
