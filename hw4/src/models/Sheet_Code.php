@@ -111,9 +111,14 @@ class Sheet_Code extends Model{
         if($result = $mysqli->query($sql) ) {
             $row = $result->fetch_assoc();
             $id = $row["id"];
-            // print("ID: $id .\n");
+            if(empty($id))
+            {
+                $id = -1;
+            }
             $result->free();
         }
+        print("ID: $id .\n");
+
         return $id;
     }
 

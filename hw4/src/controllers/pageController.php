@@ -14,21 +14,22 @@ class PageController {
   private $landingView;
 
     function render() {
-      // echo true;
-      // echo false;
+
     if(isset($_POST['userInput'])) //Check if the user actually put any input
     {
       $inputString = filter_var($_POST['userInput'], FILTER_SANITIZE_STRING); // Get the users input in a string
       
-      $this->data = new M\Sheet($inputString); //Create a sheet with the users input name
-      $this->sheetData = new M\Sheet_Code($inputString); //create a sheet_code with users input.. may or may not exist
-      echo $this->$data->valid;
-      if($data->valid){ //If this sheet is already in the database
+      $sheet = new M\Sheet($inputString); //Create a sheet with the users input name
+      $sheetCode = new M\Sheet_Code($inputString); //create a sheet_code with users input.. may or may not exist
+
+      if($sheet->valid){ //If this sheet is already in the database
+        echo "this is an existing sheet";
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($data);//Pass the data to View
       }
 
-      else if($sheetData->valid){
+      else if($sheetCode->valid){
+        echo "this is an existing sheet code";
         $sheetCodeName = $sheetData->sheet_name; //Get the name of the sheet which corresponds to the sheet_data
         $dataToPass = new M\Sheet($sheetCodeName); //create a sheet object to pass to view
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
@@ -36,6 +37,7 @@ class PageController {
       }
 
       else{
+        echo 'new sheet';
         $sheet_to_pass = new M\Sheet($inputString, '[["Tom", 5], ["Sally", 6]]');
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($data);//Pass the data to View

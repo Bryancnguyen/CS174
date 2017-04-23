@@ -54,8 +54,8 @@ class Sheet extends Model{
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
         $result = \mysqli_query($mysqli,$sql);
-        print($sql . "\n");
-        print("Res:". $result . "\n");
+        // print($sql . "\n");
+        // print("Res:". $result . "\n");
         $mysqli->close();
     }
 
@@ -65,11 +65,13 @@ class Sheet extends Model{
             print("Failed to connect to MySQL: (" . $mysqli->connect_errno . ") ". $mysqli->connect_error ."\n");
         }
         $this->id = $this->getID($mysqli, $this->name);
-        print("Existing Sheet being Queried: ". $this->name ."\n");
+        // print("Existing Sheet being Queried: ". $this->name ."\n");
         if($this->id < 0){
             $this->valid = false;
+            // print("false");
         }
         else {
+            // print("true");
             $this->valid = true;
             $this->data = $this->getData($mysqli, $this->name);
             $this->codes = $this->getCodes($mysqli, $this->id, $this->name);
@@ -83,12 +85,16 @@ class Sheet extends Model{
     private function getID($mysqli, $name){
         $sql = "SELECT id FROM `sheet` WHERE name='$name'";
         $id = -1;
-        if($result = $mysqli->query($sql) ) {
+        if($result = $mysqli->query($sql)) {
             $row = $result->fetch_assoc();
             $id = $row["id"];
-            // print("ID: $id .\n");
+            if(empty($id))
+            {
+                $id = -1;
+            }
             $result->free();
         }
+        // print("ID: $id .\n");
         return $id;
     }
 
