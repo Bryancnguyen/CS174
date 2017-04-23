@@ -140,4 +140,20 @@ class Sheet extends Model{
         $codes[] = new Sheet_Code($id, $name, substr(md5($id . "file"), 0, 8), "file");
         return $codes;
     }
+
+    private function makeXML($data){
+        $dat_arr = json_decode($data);
+        $xml_str = "";
+        foreach ($dat_arr as $row) {
+            $xml_str = ($xml_str . "<row>" . PHP_EOL);
+            foreach ($row as $col) {
+                $xml_str = ($xml_str . "  <col>" . $col . "</col>". PHP_EOL);
+            }
+            $xml_str = ($xml_str . "</row>". PHP_EOL);
+        }
+        $xml = simplexml_load_string($xml_str);
+        if($xml !== false){
+            //dump xml
+        }
+    }
 }
