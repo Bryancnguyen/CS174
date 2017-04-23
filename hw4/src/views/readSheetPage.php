@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace cs174\hw4\views;
 // require_once './src/views/helpers/readPageHelper.php';
@@ -7,7 +7,7 @@ use \cs174\hw4\views\helpers as H;
 class readSheetPage extends H\readPageHelper {
     function render($data)
     {
-        echo $data;
+
         ?>
         <body onload="loadReadSheet()">
           <div class="websheets-body">
