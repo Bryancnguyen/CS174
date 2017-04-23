@@ -10,7 +10,6 @@ class editSheetPage extends H\editPageHelper {
         ?>
         <body onload="loadEditSheet()">
           <div class="websheets-body">
-        <form>
         <h1><a class="websheet-link" href='./index.php'>Web Sheets:</a></br>Your Spreadsheet Name</h1>
         <div class="url-wrapper">
         <label class="input-labels" for="edit-url">Edit Url:</label>

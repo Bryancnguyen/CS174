@@ -15,8 +15,7 @@
  * @param Array supplied_data two dimensional array of the rows and columns
  *      of data for the spreadsheet
  */
-function Spreadsheet(spreadsheet_id, supplied_data)
-{
+function Spreadsheet(spreadsheet_id, supplied_data) {
     var self = this;
     var p = Spreadsheet.prototype;
     var properties = (typeof arguments[2] !== 'undefined') ?
@@ -48,10 +47,10 @@ function Spreadsheet(spreadsheet_id, supplied_data)
         }
     }
     var property_defaults = {
-        'mode' : 'read', // currently, only supports csv
-        'data_id' : spreadsheet_id + "-data",
-        'data_name' : 'page',
-        'table_style' : 'overflow:auto;height:6in;',
+        'mode': 'read', // currently, only supports csv
+        'data_id': spreadsheet_id + "-data",
+        'data_name': 'page',
+        'table_style': 'overflow:auto;height:6in;',
     };
     for (var property_key in property_defaults) {
         if (typeof properties[property_key] !== 'undefined') {
@@ -63,8 +62,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
     /**
      * Main function used to draw the spreadsheet with the container tag
      */
-    p.draw = function()
-    {   
+    p.draw = function () {
         //used to draw a csv based on spreadsheet data
         var table = "<div style='" + self.table_style + "'>";
         var length = data.length;
@@ -73,9 +71,9 @@ function Spreadsheet(spreadsheet_id, supplied_data)
         var delete_button = "";
         var pre_delete_button = "";
         if (self.mode == 'write') {
-            table += "<input id='" + self.data_id+ "' type='hidden' " +
+            table += "<input id='" + self.data_id + "' type='hidden' " +
                 "name='" + self.data_name + "' value='" + JSON.stringify(
-                data)+ "' />";
+                    data) + "' />";
             add_button = "<button>+</button>";
             pre_delete_button = "<button>-</button>";
         }
@@ -89,7 +87,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
         table += "</tr>";
         delete_button = "";
         for (i = 0; i < length; i++) {
-            table +="<tr><th style='min-width:1.1in;text-align:right;'>" +
+            table += "<tr><th style='min-width:1.1in;text-align:right;'>" +
                 delete_button + (i + 1) + add_button + "</th>";
             delete_button = pre_delete_button;
             for (var j = 0; j < width; j++) {
@@ -106,6 +104,23 @@ function Spreadsheet(spreadsheet_id, supplied_data)
         }
         table += "</table></div>";
         container.innerHTML = table;
+        (function () {
+            var td = document.getElementsByTagName('td');
+            for (var i = 0; i < td.length; i++) {
+                td[i].addEventListener("click", change, false);
+                td[i].addEventListener('blur', changeback, false);
+            }
+            function change() {
+                this.contentEditable = true;
+                this.focus();
+            }
+            function changeback() {
+                var updateSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]])
+                updateSheet.mode = 'write';
+                updateSheet.updateCell(event);
+                this.removeAttribute("contentEditable");
+            }
+        }());
     }
     /**
      * Calculates the value of a cell expression in a spreadsheet. Currently,
@@ -122,15 +137,14 @@ function Spreadsheet(spreadsheet_id, supplied_data)
      * @return mixed the value of the cell or the String 'NaN' if the expression
      *    was not evaluatable
      */
-    p.evaluateCell = function(cell_expression, location)
-    {
+    p.evaluateCell = function (cell_expression, location) {
         var out = [location, false];
         if (location >= cell_expression.length) {
             return out;
         }
         location = self.skipWhitespace(cell_expression, location);
         out[0] = location;
-        if(cell_expression.charAt(location) == "(") {
+        if (cell_expression.charAt(location) == "(") {
             left_out = self.evaluateCell(cell_expression, location + 1);
             if (!['+', '-', '*', '/'].includes(
                 cell_expression.charAt(left_out[0])) ||
@@ -162,15 +176,15 @@ function Spreadsheet(spreadsheet_id, supplied_data)
         var rest = cell_expression.substring(location);
         var value = rest.match(/^\-?\d+(\.\d*)?|^\-?\.\d+/);
         if (value !== null) {
-            out[0] = self.skipWhitespace(cell_expression,location +
-                value[0].length +1);
+            out[0] = self.skipWhitespace(cell_expression, location +
+                value[0].length + 1);
             out[1] = (value[0].match(/\./) == '.') ? parseFloat(value[0]) :
                 parseInt(value[0]);
             return out;
         }
         value = rest.match(/^[A-Z]+\d+/);
         if (value !== null) {
-            out[0] = self.skipWhitespace(cell_expression,location +
+            out[0] = self.skipWhitespace(cell_expression, location +
                 value.length + 1);
             var row_col = self.cellNameAsRowColumn(value.toString().trim());
             out[1] = data[row_col[0] - 1][row_col[1]];
@@ -186,8 +200,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
      * @param Number location where to start search from
      * @return Number position of non-WS character
      */
-    p.skipWhitespace = function(haystack, location)
-    {
+    p.skipWhitespace = function (haystack, location) {
         var next_loc = haystack.substring(location).search(/\S/);
         if (next_loc > 0) {
             location += next_loc;
@@ -200,13 +213,12 @@ function Spreadsheet(spreadsheet_id, supplied_data)
      * @param Number number the value to convert to base 26
      * @return String result of conversion
      */
-    p.letterRepresentation = function(number)
-    {
+    p.letterRepresentation = function (number) {
         var pre_letter;
         var out = "";
         do {
             pre_letter = number % 26;
-            number = Math.floor(number/26);
+            number = Math.floor(number / 26);
             out += String.fromCharCode(65 + pre_letter);
         } while (number > 25);
         return out;
@@ -219,8 +231,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
      * @param String cell_name name to convert
      * @return Array ordered pair corresponding to name
      */
-    p.cellNameAsRowColumn = function(cell_name)
-    {
+    p.cellNameAsRowColumn = function (cell_name) {
         var cell_parts = cell_name.match(/^([A-Z]+)(\d+)$/);
         if (cell_parts == null) {
             return null;
@@ -244,17 +255,18 @@ function Spreadsheet(spreadsheet_id, supplied_data)
      */
     p.updateCell = function (event) {
         var type = (event.target.innerHTML == "+") ? 'add' :
-            (event.target.innerHTML == "-") ? 'delete' :'cell';
+            (event.target.innerHTML == "-") ? 'delete' : 'cell';
         var target = (type == 'cell') ? event.target :
             event.target.parentElement;
         var row = target.parentElement.rowIndex - 1;
         var column = target.cellIndex - 1;
         var length = data.length;
         var width = data[0].length;
+        // console.log(event);
         if (row >= 0 && column >= 0) {
-            var new_value = prompt(self.letterRepresentation(column) +
-                (row + 1), data[row][column]);
+            var new_value = event.target.innerHTML;
             if (new_value != null) {
+                console.log(new_value);
                 data[row][column] = new_value;
                 data_elt = document.getElementById(self.data_id);
                 data_elt.value = JSON.stringify(data);
@@ -263,7 +275,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
         } else if (type == 'add' && row == -1 && column >= 0) {
             for (var i = 0; i < length; i++) {
                 for (var j = width; j > column + 1; j--) {
-                    data[i][j] = data[i][j-1];
+                    data[i][j] = data[i][j - 1];
                 }
                 data[i][column + 1] = "";
             }
@@ -285,7 +297,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
             self.draw();
         } else if (type == 'delete' && row == -1 && column >= 0) {
             for (var i = 0; i < length; i++) {
-                for (var j = column ; j < width - 1; j++) {
+                for (var j = column; j < width - 1; j++) {
                     data[i][j] = data[i][j + 1];
                 }
                 data[i].pop();
@@ -295,7 +307,7 @@ function Spreadsheet(spreadsheet_id, supplied_data)
             self.draw();
         } else if (type == 'delete' && row >= 0 && column == -1) {
             for (var i = row; i < length - 1; i++) {
-                    data[i] = data[i + 1];
+                data[i] = data[i + 1];
             }
             data.pop();
             data_elt = document.getElementById(self.data_id);
@@ -311,13 +323,20 @@ function Spreadsheet(spreadsheet_id, supplied_data)
 }
 
 function loadEditSheet() {
-    var editSheet = new Spreadsheet('web-sheet-data', [["Tom",5],["Sally", 6]]);
+    var editSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
     editSheet.mode = 'write';
     editSheet.draw();
 }
 
 function loadReadSheet() {
-    var readSheet = new Spreadsheet('web-sheet-data', [["Tom",5],["Sally", 6]]);
+    var readSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
     readSheet.mode = 'read';
     readSheet.draw();
 }
+
+document.getElementById("web-sheet-data").addEventListener("click", function(){
+    var updateSheet = new Spreadsheet('web-sheet-data', [["Tom",5],["Sally", 6]])
+    updateSheet.mode = 'write';
+    updateSheet.updateCell(event);
+});
+
