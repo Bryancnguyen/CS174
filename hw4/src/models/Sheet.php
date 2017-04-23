@@ -8,7 +8,7 @@ class Sheet extends Model{
 
     public $valid;
     public $id;
-	  public $name; 
+	public $name; 
     public $data; //JSON encoded data
     public $codes;
 
@@ -74,6 +74,7 @@ class Sheet extends Model{
             // print("true");
             $this->valid = true;
             $this->data = $this->getData($mysqli, $this->name);
+            // print($this->data);
             $this->codes = $this->getCodes($mysqli, $this->id, $this->name);
         }
         $mysqli->close();
@@ -141,19 +142,45 @@ class Sheet extends Model{
         return $codes;
     }
 
+    public function XML(){
+        $this->makeXML($this->data);
+    }
+
     private function makeXML($data){
+        // print("Data: $data");
         $dat_arr = json_decode($data);
-        $xml_str = "";
-        foreach ($dat_arr as $row) {
-            $xml_str = ($xml_str . "<row>" . PHP_EOL);
-            foreach ($row as $col) {
-                $xml_str = ($xml_str . "  <col>" . $col . "</col>". PHP_EOL);
+        $xml_str = '<?xml version="1.0"?><spreadsheet>';
+        if($dat_arr){
+            foreach ($dat_arr as $row) {
+                $xml_str .= "<row>";
+                foreach ($row as $col) {
+                    $xml_str .= "<col>$col</col>";
+                }
+                $xml_str .= "</row>";
             }
-            $xml_str = ($xml_str . "</row>". PHP_EOL);
+            $xml_str .= "</spreadsheet>";
         }
+        else{
+            print(PHP_EOL . "Hey looks like the json is shwap." . PHP_EOL);
+        }
+        // print("<br>XML String: ". htmlentities($xml_str));
         $xml = simplexml_load_string($xml_str);
         if($xml !== false){
-            //dump xml
+            //dump xml to file
+            $file = "data.xml";
+            if(file_put_contents($file, $xml_str)){
+                //send over http
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/octet-stream');
+                header('Content-Disposition: attachment; filename="'.basename($file).'"');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($file));
+                readfile($file);
+                exit;
+            }
+            
         }
     }
 }
