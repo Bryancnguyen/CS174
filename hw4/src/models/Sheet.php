@@ -8,17 +8,17 @@ class Sheet extends Model{
 
     public $valid;
     public $id;
-	public $name; 
+	  public $name; 
     public $data; //JSON encoded data
     public $codes;
 
 	public function __construct(){
     	parent::__construct();
-        $a = func_get_args(); 
-        $i = func_num_args(); 
-        if (method_exists($this,$f='__construct'.$i)) { 
-            call_user_func_array(array($this,$f),$a); 
-        } 
+        $a = func_get_args();
+        $i = func_num_args();
+        if (method_exists($this,$f='__construct'.$i)) {
+            call_user_func_array(array($this,$f),$a);
+        }
     }
 
     public function __construct1($name){ //existing sheet

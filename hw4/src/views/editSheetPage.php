@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace cs174\hw4\views;
 // require_once './src/views/helpers/editPageHelper.php';
@@ -20,9 +20,11 @@ class editSheetPage extends H\editPageHelper {
         <h1><a class="websheet-link" href='./index.php'>Web Sheets:</a></br><?=$data->name?></h1>
         <div class="url-wrapper">
         <label class="input-labels" for="edit-url">Edit Url:</label>
-        <input type="text" name="edit-url" class="edit-url" value="?arg1=<?=$arr[0]?>"/>
+
+        <input type="text" name="edit-url" class="edit-url" value="?arg1=<?=$arr[1]?>"/>
         <label class="input-labels" for="read-url">Read Url:</label>
-        <input type="text" name="read-url" class="read-url" value="?arg1=<?=$arr[1]?>"/>
+        <input type="text" name="read-url" class="read-url" value="?arg1=<?=$arr[0]?>"/>
+
         <label class="input-labels" for="file-url">File Url:</label>
         <input type="text" name="file-url" class="file-url" value="?arg1=<?=$arr[2]?>"/>
         </div>
