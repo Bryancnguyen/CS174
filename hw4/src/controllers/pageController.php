@@ -93,7 +93,7 @@ class PageController {
 
       else{
         echo 'creating new sheet';
-        $sheet_to_pass = new M\Sheet($inputString, '{[["Tom", 5], ["Sally", 6]]}');
+        $sheet_to_pass = new M\Sheet($inputString, '[["Tom", 5], ["Sally", 6]]');
         $dataToPass = new M\Sheet($inputString);
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($dataToPass);//Pass the data to View
