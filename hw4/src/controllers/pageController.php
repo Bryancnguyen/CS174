@@ -15,10 +15,16 @@ class PageController {
 
     function render() {
 
-    $code = "";
-    if(isset($_GET['arg1'])){
-      $code = $_GET['arg1'];
-    }
+      if(isset($_POST['c'])){
+        if($_POST['c'] == "api" && isset($_POST['data']) && isset($_POST['model'])){
+          $api = new ApiController($_POST['model'], $_POST['data']);
+        }
+      }
+
+      $code = "";
+      if(isset($_GET['arg1'])){
+        $code = $_GET['arg1'];
+      }
 
     if($code){ //If they entered the hashcode in the browser
       $sheetCode = new M\Sheet_Code($code);

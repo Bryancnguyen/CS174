@@ -183,4 +183,19 @@ class Sheet extends Model{
             
         }
     }
+
+    public function update($data){
+        $mysqli = parent::connectTo("cs174hw4");
+        // print("Data: $data");
+        $sql = "UPDATE sheet SET data = '$data' WHERE id=" . $this->id;
+        if($result = $mysqli->query($sql)) {
+            $status = true;
+        }
+        else{
+            $status = false;
+        }
+        $mysqli->close();
+        // print(Success: $status);
+        return $status;
+    }
 }
