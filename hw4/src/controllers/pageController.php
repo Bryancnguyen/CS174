@@ -99,7 +99,9 @@ class PageController {
 
       else{
         echo 'creating new sheet';
-        $sheet_to_pass = new M\Sheet($inputString, '[["Tom", 5], ["Sally", 6]]');
+        $arr = array(array("Tom", 5), array("Sally", 6));
+        $jsonString = json_encode($arr);
+        $sheet_to_pass = new M\Sheet($inputString, $jsonString);
         $dataToPass = new M\Sheet($inputString);
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($dataToPass);//Pass the data to View

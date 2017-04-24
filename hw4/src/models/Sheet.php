@@ -195,7 +195,7 @@ class Sheet extends Model{
             $status = false;
         }
         $mysqli->close();
-        // print(Success: $status);
+        // print("Success: $status");
         return $status;
     }
 }

@@ -104,23 +104,32 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
         }
         table += "</table></div>";
         container.innerHTML = table;
-        (function () {
-            var td = document.getElementsByTagName('td');
-            for (var i = 0; i < td.length; i++) {
-                td[i].addEventListener("click", change, false);
-                td[i].addEventListener('blur', changeback, false);
-            }
-            function change() {
-                this.contentEditable = true;
-                this.focus();
-            }
-            function changeback() {
-                var updateSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]])
-                updateSheet.mode = 'write';
-                updateSheet.updateCell(event);
-                this.removeAttribute("contentEditable");
-            }
-        }());
+        var buttons = document.getElementsByTagName('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].addEventListener("click", updateTable, false);
+        }
+        var td = document.getElementsByTagName('td');
+        for (var i = 0; i < td.length; i++) {
+            td[i].addEventListener("click", change, false);
+            td[i].addEventListener("keyup", changeback, false);
+            td[i].addEventListener("blur", changeback, { once: true });
+        }
+        function change() {
+        this.contentEditable = true;
+        this.focus();
+    }
+    function changeback() {
+        if(event.keyCode == 13 || event.type == 'blur')
+        {
+        this.removeAttribute("contentEditable");
+        p.updateCell(event);
+        p.draw();
+        }
+    }
+    function updateTable(event) {
+        event.preventDefault();
+        p.updateCell(event);
+    }
     }
     /**
      * Calculates the value of a cell expression in a spreadsheet. Currently,
@@ -262,11 +271,19 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
         var column = target.cellIndex - 1;
         var length = data.length;
         var width = data[0].length;
-        // console.log(event);
+        console.log(data);
+        var jsonData = JSON.stringify(data);
+        var xhttp = new XMLHttpRequest();
+        var url = 'c=api&model=test&data=[[tom, 6], [sal, 7]]';
+        xhttp.open("POST", './', false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(url);
+        //c=api&model=name&data=sheetdata"
+        // var response = JSON.parse(xhttp.responseText);
+        // console.log(response);
         if (row >= 0 && column >= 0) {
             var new_value = event.target.innerHTML;
             if (new_value != null) {
-                console.log(new_value);
                 data[row][column] = new_value;
                 data_elt = document.getElementById(self.data_id);
                 data_elt.value = JSON.stringify(data);
@@ -322,15 +339,10 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
     }
 }
 
-function loadEditSheet() {
-    var editSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
+function loadEditSheet(data) {
+    var editSheet = new Spreadsheet('web-sheet-data', data);
     editSheet.mode = 'write';
-    editSheet.draw(); 
-    document.getElementById("web-sheet-data").addEventListener("click", function(){
-    var updateSheet = new Spreadsheet('web-sheet-data', [["Tom",5],["Sally", 6]])
-    updateSheet.mode = 'write';
-    updateSheet.updateCell(event);
-});
+    editSheet.draw();
 }
 
 function loadReadSheet() {
@@ -342,8 +354,7 @@ function loadReadSheet() {
 function checkIfEmpty() {
     var inputField = document.getElementById('name-code-field').value;
     console.log(inputField);
-    if(!inputField || !inputField.match(/^[a-z0-9]+$/i))
-    {
+    if (!inputField || !inputField.match(/^[a-z0-9]+$/i)) {
         event.preventDefault();
         alert('Please Enter a Valid Input');
     }

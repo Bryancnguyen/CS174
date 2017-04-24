@@ -13,8 +13,12 @@ class editSheetPage extends H\editPageHelper {
         {
             array_push($arr, $code->hash_code);
         }
+        $sheetData = $data->data;
         ?>
-        <body onload="loadEditSheet()">
+        <script type="text/javascript">
+          var jsonString=<?php echo json_encode($sheetData); ?>;
+        </script>
+        <body onload="loadEditSheet(jsonString)">
         <form method="POST">
           <div class="websheets-body">
         <h1><a class="websheet-link" href='./index.php'>Web Sheets:</a></br><?=$data->name?></h1>
