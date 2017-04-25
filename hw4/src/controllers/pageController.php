@@ -15,10 +15,16 @@ class PageController {
 
     function render() {
 
-      if(isset($_POST['c'])){
-        if($_POST['c'] == "api" && isset($_POST['data']) && isset($_POST['model'])){
-          $api = new ApiController($_POST['model'], $_POST['data']);
+      if(isset($_GET['c'])){
+        if($_GET['c'] == "api" && isset($_GET['model'])){
+          $api = new ApiController($_GET['model']);
         }
+        else{
+          print("c not api || model not set");
+        }
+      }
+      else {
+        print("c not set");
       }
 
       $code = "";
