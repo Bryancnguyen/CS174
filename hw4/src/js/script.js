@@ -14,9 +14,11 @@
  *      spreadsheet
  * @param Array supplied_data two dimensional array of the rows and columns
  *      of data for the spreadsheet
+ * @param Model to send AJAX requests to
  */
-function Spreadsheet(spreadsheet_id, supplied_data) {
+function Spreadsheet(spreadsheet_id, supplied_data, model) {
     var self = this;
+    var sheetModel = model;
     var p = Spreadsheet.prototype;
     var properties = (typeof arguments[2] !== 'undefined') ?
         arguments[2] : {};
@@ -104,6 +106,10 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
         }
         table += "</table></div>";
         container.innerHTML = table;
+        p.addEventListeners();
+        p.makeAJAXRequest();
+    }
+    p.addEventListeners = function() {
         var buttons = document.getElementsByTagName('button');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener("click", updateTable, false);
@@ -112,24 +118,32 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
         for (var i = 0; i < td.length; i++) {
             td[i].addEventListener("click", change, false);
             td[i].addEventListener("keyup", changeback, false);
-            td[i].addEventListener("blur", changeback, { once: true });
+            td[i].addEventListener("blur", changeback, false);
         }
         function change() {
-        this.contentEditable = true;
-        this.focus();
-    }
-    function changeback() {
-        if(event.keyCode == 13 || event.type == 'blur')
-        {
-        this.removeAttribute("contentEditable");
-        p.updateCell(event);
-        p.draw();
+            this.contentEditable = true;
+            this.focus();
+        }
+        function changeback() {
+            if (event.keyCode == 13 || event.type == 'blur') {
+                this.removeAttribute("contentEditable");
+                p.updateCell(event);
+                p.draw();
+            }
+        }
+        function updateTable(event) {
+            event.preventDefault();
+            p.updateCell(event);
         }
     }
-    function updateTable(event) {
-        event.preventDefault();
-        p.updateCell(event);
-    }
+
+    p.makeAJAXRequest = function () {
+        var parsedJSON = JSON.stringify(data);
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", 'index.php?c=api&model=' + sheetModel + '&data=', false);
+        xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(parsedJSON);
+        var response = xhttp.responseText;
     }
     /**
      * Calculates the value of a cell expression in a spreadsheet. Currently,
@@ -173,7 +187,38 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
             out[1] = eval("" + left_out[1] +
                 cell_expression.charAt(left_out[0]) + right_out[1]);
             return out;
-        } else if (cell_expression.charAt(location) == "-") {
+        } 
+        else if (cell_expression.charAt(location) == "a")
+        {
+            exp_out = self.evaluateCell(cell_expression, location + 4);
+            if (exp_out[1] == 'NaN') {
+                return exp_out;
+            }
+            out[0] = self.skipWhitespace(cell_expression, exp_out[0]);
+            out[1] = parseInt(exp_out[1]);
+            var arrValues = [];
+            var firstCell = cell_expression.substr(0, cell_expression.indexOf(':')).substr('avg('.length);
+            console.log(p.cellNameAsRowColumn(firstCell));
+            console.log(firstCell);
+            var secondCell = cell_expression.substr(cell_expression.indexOf(':') + 1, cell_expression.length).slice(0, -1);
+            console.log(p.cellNameAsRowColumn(secondCell));
+            console.log(secondCell);
+            
+            for(var i = 0; i < 3; i++)
+            {
+               exp_right_out = self.evaluateCell(cell_expression, exp_out[0] + 1);
+               arrValues.push(exp_right_out[1]);
+            }
+            // exp_right_out = self.evaluateCell('avg(A1:B10)', 1);
+            // if (cell_expression.charAt(right_out[0]) != ')' ||
+            //     typeof right_out[1] == 'String') {
+            //     out[0] = right_out[0];
+            //     out[1] = "NaN";
+            //     return out;
+            // }
+            return out;
+        }
+        else if (cell_expression.charAt(location) == "-") {
             sub_out = self.evaluateCell(cell_expression, location + 1);
             if (sub_out[1] == 'NaN') {
                 return sub_out;
@@ -271,16 +316,6 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
         var column = target.cellIndex - 1;
         var length = data.length;
         var width = data[0].length;
-        console.log(data);
-        var jsonData = JSON.stringify(data);
-        var xhttp = new XMLHttpRequest();
-        var url = 'c=api&model=test&data=[[tom, 6], [sal, 7]]';
-        xhttp.open("POST", './', false);
-        xhttp.setRequestHeader("Content-type", "application/json");
-        xhttp.send(url);
-        //c=api&model=name&data=sheetdata"
-        // var response = JSON.parse(xhttp.responseText);
-        // console.log(response);
         if (row >= 0 && column >= 0) {
             var new_value = event.target.innerHTML;
             if (new_value != null) {
@@ -339,8 +374,8 @@ function Spreadsheet(spreadsheet_id, supplied_data) {
     }
 }
 
-function loadEditSheet(data) {
-    var editSheet = new Spreadsheet('web-sheet-data', data);
+function loadEditSheet(data, model) {
+    var editSheet = new Spreadsheet('web-sheet-data', data, model);
     editSheet.mode = 'write';
     editSheet.draw();
 }
@@ -353,7 +388,6 @@ function loadReadSheet() {
 
 function checkIfEmpty() {
     var inputField = document.getElementById('name-code-field').value;
-    console.log(inputField);
     if (!inputField || !inputField.match(/^[a-z0-9]+$/i)) {
         event.preventDefault();
         alert('Please Enter a Valid Input');

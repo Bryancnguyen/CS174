@@ -12,6 +12,7 @@ class ApiController {
 
 	private function updateModel($model){
 		$contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+		echo $contentType;
 		if(strcasecmp($contentType, 'application/json') == 0){
 			$content = trim(file_get_contents("php://input"));
 			$decoded = json_decode($content, true);

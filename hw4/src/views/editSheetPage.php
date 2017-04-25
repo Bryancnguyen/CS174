@@ -17,8 +17,9 @@ class editSheetPage extends H\editPageHelper {
         ?>
         <script type="text/javascript">
           var jsonString=<?php echo json_encode($sheetData); ?>;
+          var model= <?php echo json_encode($data->name); ?>;
         </script>
-        <body onload="loadEditSheet(jsonString)">
+        <body onload="loadEditSheet(jsonString, model)">
         <form method="POST">
           <div class="websheets-body">
         <h1><a class="websheet-link" href='./index.php'>Web Sheets:</a></br><?=$data->name?></h1>
