@@ -121,8 +121,11 @@ function Spreadsheet(spreadsheet_id, supplied_data, model) {
             td[i].addEventListener("blur", changeback, false);
         }
         function change() {
+            if(self.mode == 'write')
+            {
             this.contentEditable = true;
             this.focus();
+            }
         }
         function changeback() {
             if (event.keyCode == 13 || event.type == 'blur') {
