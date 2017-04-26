@@ -15,6 +15,7 @@ class landingPage extends H\landingPageHelper {
         <h1><a class="websheet-link" href='./index.php'>Web Sheets</a></h1>
         <div class="name-code-wrapper">
         <input id="name-code-field" name="userInput" type="text" class="name-code-field" placeholder="New Sheet Name or Code"/>
+        <input type="hidden" name="c" value="page"/>
         <input type="submit" name="button" class="go-button" value="Go" />
         </div>
         </form>

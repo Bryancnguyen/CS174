@@ -83,7 +83,7 @@ class PageController {
     }
 
 
-    else if(isset($_POST['userInput'])) //Check if the user actually put any input
+    else if(isset($_POST['userInput']) && isset($_POST['c']) && $_POST['c'] == "page")//Check if the user actually put any input
     {
       $inputString = filter_var($_POST['userInput'], FILTER_SANITIZE_STRING); // Get the users input in a string
 
