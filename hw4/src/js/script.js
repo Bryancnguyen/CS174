@@ -109,7 +109,7 @@ function Spreadsheet(spreadsheet_id, supplied_data, model) {
         p.addEventListeners();
         p.makeAJAXRequest();
     }
-    p.addEventListeners = function() {
+    p.addEventListeners = function () {
         var buttons = document.getElementsByTagName('button');
         for (var i = 0; i < buttons.length; i++) {
             buttons[i].addEventListener("click", updateTable, false);
@@ -187,9 +187,8 @@ function Spreadsheet(spreadsheet_id, supplied_data, model) {
             out[1] = eval("" + left_out[1] +
                 cell_expression.charAt(left_out[0]) + right_out[1]);
             return out;
-        } 
-        else if (cell_expression.charAt(location) == "a")
-        {
+        }
+        else if (cell_expression.charAt(location) == "a") {
             exp_out = self.evaluateCell(cell_expression, location + 4);
             if (exp_out[1] == 'NaN') {
                 return exp_out;
@@ -198,198 +197,200 @@ function Spreadsheet(spreadsheet_id, supplied_data, model) {
             out[1] = parseInt(exp_out[1]);
             var arrValues = [];
             var firstCell = cell_expression.substr(0, cell_expression.indexOf(':')).substr('avg('.length);
-            console.log(p.cellNameAsRowColumn(firstCell));
-            console.log(firstCell);
+            var firstCellValue = p.cellNameAsRowColumn(firstCell);
             var secondCell = cell_expression.substr(cell_expression.indexOf(':') + 1, cell_expression.length).slice(0, -1);
-            console.log(p.cellNameAsRowColumn(secondCell));
-            console.log(secondCell);
-            
-            for(var i = 0; i < 3; i++)
+            var secondCellValue = p.cellNameAsRowColumn(secondCell);
+            for (var i = firstCellValue[1]; i < secondCellValue[1] + 1; i++) {
+                var firstLetter = p.letterRepresentation(firstCellValue[1]+ i);
+                var secondLetter = p.letterRepresentation(secondCellValue[1]);
+                for (var j = firstCellValue[0] - 1; j < secondCellValue[0]; j++) {
+                    var newExp = '=avg(' + firstLetter + (firstCellValue[0] + j) + ':' + secondLetter + (firstCellValue[0] + j) + ')';
+                    var testLetters = firstLetter + (firstCellValue[0] + j);
+                    var output = self.evaluateCell(testLetters);
+                    arrValues.push(output[1]);
+                }
+            }
+            var sum = 0;
+            for (var i = 0; i < arrValues.length; i++)
             {
-               exp_right_out = self.evaluateCell(cell_expression, exp_out[0] + 1);
-               arrValues.push(exp_right_out[1]);
+                sum += parseInt(arrValues[i], 10);
             }
-            // exp_right_out = self.evaluateCell('avg(A1:B10)', 1);
-            // if (cell_expression.charAt(right_out[0]) != ')' ||
-            //     typeof right_out[1] == 'String') {
-            //     out[0] = right_out[0];
-            //     out[1] = "NaN";
-            //     return out;
-            // }
-            return out;
-        }
+            out[1] = sum/arrValues.length;
+
+                    return out;
+                }
         else if (cell_expression.charAt(location) == "-") {
-            sub_out = self.evaluateCell(cell_expression, location + 1);
-            if (sub_out[1] == 'NaN') {
-                return sub_out;
-            }
-            out[0] = self.skipWhitespace(cell_expression, sub_out[0]);
-            out[1] = - sub_out[1];
-            return out;
-        }
-        var rest = cell_expression.substring(location);
-        var value = rest.match(/^\-?\d+(\.\d*)?|^\-?\.\d+/);
-        if (value !== null) {
-            out[0] = self.skipWhitespace(cell_expression, location +
-                value[0].length + 1);
-            out[1] = (value[0].match(/\./) == '.') ? parseFloat(value[0]) :
-                parseInt(value[0]);
-            return out;
-        }
-        value = rest.match(/^[A-Z]+\d+/);
-        if (value !== null) {
-            out[0] = self.skipWhitespace(cell_expression, location +
-                value.length + 1);
-            var row_col = self.cellNameAsRowColumn(value.toString().trim());
-            out[1] = data[row_col[0] - 1][row_col[1]];
-        }
-        return out;
-    }
-    /**
-     * Returns the position of the first non-whitespace character after
-     * location in the string (returns location if location is non-WS or
-     * if no location found).
-     *
-     * @param String haystack string to search in
-     * @param Number location where to start search from
-     * @return Number position of non-WS character
-     */
-    p.skipWhitespace = function (haystack, location) {
-        var next_loc = haystack.substring(location).search(/\S/);
-        if (next_loc > 0) {
-            location += next_loc;
-        }
-        return location;
-    }
-    /**
-     * Converts a decimal number to a base 26 number string using A-Z for 0-25.
-     * Used where drawing column headers for spreadsheet
-     * @param Number number the value to convert to base 26
-     * @return String result of conversion
-     */
-    p.letterRepresentation = function (number) {
-        var pre_letter;
-        var out = "";
-        do {
-            pre_letter = number % 26;
-            number = Math.floor(number / 26);
-            out += String.fromCharCode(65 + pre_letter);
-        } while (number > 25);
-        return out;
-    }
-    /**
-     * Given a cell name string, such as B4, converts it to an ordered pair
-     * suitable for lookup in the spreadsheets data array. On B4,
-     * [3, 1] would be returned.
-     *
-     * @param String cell_name name to convert
-     * @return Array ordered pair corresponding to name
-     */
-    p.cellNameAsRowColumn = function (cell_name) {
-        var cell_parts = cell_name.match(/^([A-Z]+)(\d+)$/);
-        if (cell_parts == null) {
-            return null;
-        }
-        var column_string = cell_parts[1];
-        var len = column_string.length;
-        var column = 0;
-        var shift = 1;
-        for (var i = 0; i < len; i++) {
-            column += (column_string.charCodeAt(i) - 65) * shift;
-            shift = 26;
-        }
-        return [parseInt(cell_parts[2]), column];
-    }
-    /**
-     * Callback for click events on spreadsheet. Determines if the event
-     * occurred on a spreadsheet cell. If so, it opens a prompt for a
-     * new value for the cell and updates the cell and the associated form
-     * hidden input value.
-     * @param Object event click event object
-     */
-    p.updateCell = function (event) {
-        var type = (event.target.innerHTML == "+") ? 'add' :
-            (event.target.innerHTML == "-") ? 'delete' : 'cell';
-        var target = (type == 'cell') ? event.target :
-            event.target.parentElement;
-        var row = target.parentElement.rowIndex - 1;
-        var column = target.cellIndex - 1;
-        var length = data.length;
-        var width = data[0].length;
-        if (row >= 0 && column >= 0) {
-            var new_value = event.target.innerHTML;
-            if (new_value != null) {
-                data[row][column] = new_value;
-                data_elt = document.getElementById(self.data_id);
-                data_elt.value = JSON.stringify(data);
-                event.target.innerHTML = new_value;
-            }
-        } else if (type == 'add' && row == -1 && column >= 0) {
-            for (var i = 0; i < length; i++) {
-                for (var j = width; j > column + 1; j--) {
-                    data[i][j] = data[i][j - 1];
+                    sub_out = self.evaluateCell(cell_expression, location + 1);
+                    if (sub_out[1] == 'NaN') {
+                        return sub_out;
+                    }
+                    out[0] = self.skipWhitespace(cell_expression, sub_out[0]);
+                    out[1] = - sub_out[1];
+                    return out;
                 }
-                data[i][column + 1] = "";
-            }
-            data_elt = document.getElementById(self.data_id);
-            data_elt.value = JSON.stringify(data);
-            self.draw();
-        } else if (type == 'add' && row >= 0 && column == -1) {
-            data[length] = [];
-            for (var i = length; i > row + 1; i--) {
-                for (var j = 0; j < width; j++) {
-                    data[i][j] = data[i - 1][j];
+                var rest = cell_expression.substring(location);
+                var value = rest.match(/^\-?\d+(\.\d*)?|^\-?\.\d+/);
+                if (value !== null) {
+                    out[0] = self.skipWhitespace(cell_expression, location +
+                        value[0].length + 1);
+                    out[1] = (value[0].match(/\./) == '.') ? parseFloat(value[0]) :
+                        parseInt(value[0]);
+                    return out;
                 }
-            }
-            for (var j = 0; j < width; j++) {
-                data[row + 1][j] = "";
-            }
-            data_elt = document.getElementById(self.data_id);
-            data_elt.value = JSON.stringify(data);
-            self.draw();
-        } else if (type == 'delete' && row == -1 && column >= 0) {
-            for (var i = 0; i < length; i++) {
-                for (var j = column; j < width - 1; j++) {
-                    data[i][j] = data[i][j + 1];
+                value = rest.match(/^[A-Z]+\d+/);
+                if (value !== null) {
+                    out[0] = self.skipWhitespace(cell_expression, location +
+                        value.length + 1);
+                    var row_col = self.cellNameAsRowColumn(value.toString().trim());
+                    out[1] = data[row_col[0] - 1][row_col[1]];
                 }
-                data[i].pop();
+                return out;
             }
-            data_elt = document.getElementById(self.data_id);
-            data_elt.value = JSON.stringify(data);
-            self.draw();
-        } else if (type == 'delete' && row >= 0 && column == -1) {
-            for (var i = row; i < length - 1; i++) {
-                data[i] = data[i + 1];
+            /**
+             * Returns the position of the first non-whitespace character after
+             * location in the string (returns location if location is non-WS or
+             * if no location found).
+             *
+             * @param String haystack string to search in
+             * @param Number location where to start search from
+             * @return Number position of non-WS character
+             */
+            p.skipWhitespace = function (haystack, location) {
+                var next_loc = haystack.substring(location).search(/\S/);
+                if (next_loc > 0) {
+                    location += next_loc;
+                }
+                return location;
             }
-            data.pop();
-            data_elt = document.getElementById(self.data_id);
-            data_elt.value = JSON.stringify(data);
-            self.draw();
+            /**
+             * Converts a decimal number to a base 26 number string using A-Z for 0-25.
+             * Used where drawing column headers for spreadsheet
+             * @param Number number the value to convert to base 26
+             * @return String result of conversion
+             */
+            p.letterRepresentation = function (number) {
+                var pre_letter;
+                var out = "";
+                do {
+                    pre_letter = number % 26;
+                    number = Math.floor(number / 26);
+                    out += String.fromCharCode(65 + pre_letter);
+                } while (number > 25);
+                return out;
+            }
+            /**
+             * Given a cell name string, such as B4, converts it to an ordered pair
+             * suitable for lookup in the spreadsheets data array. On B4,
+             * [3, 1] would be returned.
+             *
+             * @param String cell_name name to convert
+             * @return Array ordered pair corresponding to name
+             */
+            p.cellNameAsRowColumn = function (cell_name) {
+                var cell_parts = cell_name.match(/^([A-Z]+)(\d+)$/);
+                if (cell_parts == null) {
+                    return null;
+                }
+                var column_string = cell_parts[1];
+                var len = column_string.length;
+                var column = 0;
+                var shift = 1;
+                for (var i = 0; i < len; i++) {
+                    column += (column_string.charCodeAt(i) - 65) * shift;
+                    shift = 26;
+                }
+                return [parseInt(cell_parts[2]), column];
+            }
+            /**
+             * Callback for click events on spreadsheet. Determines if the event
+             * occurred on a spreadsheet cell. If so, it opens a prompt for a
+             * new value for the cell and updates the cell and the associated form
+             * hidden input value.
+             * @param Object event click event object
+             */
+            p.updateCell = function (event) {
+                var type = (event.target.innerHTML == "+") ? 'add' :
+                    (event.target.innerHTML == "-") ? 'delete' : 'cell';
+                var target = (type == 'cell') ? event.target :
+                    event.target.parentElement;
+                var row = target.parentElement.rowIndex - 1;
+                var column = target.cellIndex - 1;
+                var length = data.length;
+                var width = data[0].length;
+                if (row >= 0 && column >= 0) {
+                    var new_value = event.target.innerHTML;
+                    if (new_value != null) {
+                        data[row][column] = new_value;
+                        data_elt = document.getElementById(self.data_id);
+                        data_elt.value = JSON.stringify(data);
+                        event.target.innerHTML = new_value;
+                    }
+                } else if (type == 'add' && row == -1 && column >= 0) {
+                    for (var i = 0; i < length; i++) {
+                        for (var j = width; j > column + 1; j--) {
+                            data[i][j] = data[i][j - 1];
+                        }
+                        data[i][column + 1] = "";
+                    }
+                    data_elt = document.getElementById(self.data_id);
+                    data_elt.value = JSON.stringify(data);
+                    self.draw();
+                } else if (type == 'add' && row >= 0 && column == -1) {
+                    data[length] = [];
+                    for (var i = length; i > row + 1; i--) {
+                        for (var j = 0; j < width; j++) {
+                            data[i][j] = data[i - 1][j];
+                        }
+                    }
+                    for (var j = 0; j < width; j++) {
+                        data[row + 1][j] = "";
+                    }
+                    data_elt = document.getElementById(self.data_id);
+                    data_elt.value = JSON.stringify(data);
+                    self.draw();
+                } else if (type == 'delete' && row == -1 && column >= 0) {
+                    for (var i = 0; i < length; i++) {
+                        for (var j = column; j < width - 1; j++) {
+                            data[i][j] = data[i][j + 1];
+                        }
+                        data[i].pop();
+                    }
+                    data_elt = document.getElementById(self.data_id);
+                    data_elt.value = JSON.stringify(data);
+                    self.draw();
+                } else if (type == 'delete' && row >= 0 && column == -1) {
+                    for (var i = row; i < length - 1; i++) {
+                        data[i] = data[i + 1];
+                    }
+                    data.pop();
+                    data_elt = document.getElementById(self.data_id);
+                    data_elt.value = JSON.stringify(data);
+                    self.draw();
+                }
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            if (this.mode == 'write') {
+                container.addEventListener("click", self.updateCell, true);
+            }
         }
-        event.stopPropagation();
-        event.preventDefault();
-    }
-    if (this.mode == 'write') {
-        container.addEventListener("click", self.updateCell, true);
-    }
-}
 
-function loadEditSheet(data, model) {
-    var editSheet = new Spreadsheet('web-sheet-data', data, model);
-    editSheet.mode = 'write';
-    editSheet.draw();
-}
+        function loadEditSheet(data, model) {
+            var editSheet = new Spreadsheet('web-sheet-data', data, model);
+            editSheet.mode = 'write';
+            editSheet.draw();
+        }
 
-function loadReadSheet() {
-    var readSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
-    readSheet.mode = 'read';
-    readSheet.draw();
-}
+        function loadReadSheet() {
+            var readSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
+            readSheet.mode = 'read';
+            readSheet.draw();
+        }
 
-function checkIfEmpty() {
-    var inputField = document.getElementById('name-code-field').value;
-    if (!inputField || !inputField.match(/^[a-z0-9]+$/i)) {
-        event.preventDefault();
-        alert('Please Enter a Valid Input');
-    }
-}
+        function checkIfEmpty() {
+            var inputField = document.getElementById('name-code-field').value;
+            if (!inputField || !inputField.match(/^[a-z0-9]+$/i)) {
+                event.preventDefault();
+                alert('Please Enter a Valid Input');
+            }
+        }
