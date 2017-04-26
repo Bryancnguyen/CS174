@@ -8,12 +8,25 @@ namespace cs174\hw4\controllers;
 use \cs174\hw4\views as V;
 use \cs174\hw4\models as M;
 
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
+
+
+
+
 class PageController {
+
+
   private $data;
   private $sheetCode;
   private $landingView;
 
     function render() {
+      // create a log channel
+      $log = new Logger('logger');
+      $log->pushHandler(new StreamHandler('./app_data/spread.log', Logger::NOTICE));
+
+      // add records to the log
 
       if(isset($_GET['c'])){
         if($_GET['c'] == "api" && isset($_GET['model'])){
@@ -42,6 +55,7 @@ class PageController {
           $dataToPass = new M\Sheet($sheetName); //create a sheet object to pass to view
           $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
           $this->editSheetView->display($dataToPass);//Pass the data to View
+          $log->notice('Visited Edit Page');
         }
         else if($sheetCode->code_type == "read")
         {
@@ -49,6 +63,7 @@ class PageController {
           $dataToPass = new M\Sheet($sheetName); //create a sheet object to pass to view
           $this->readView = new V\readSheetPage('WebLayout');//Create the view
           $this->readView->display($dataToPass);//Pass the data to View
+          $log->notice('Visited Read Page');
         }
         else
         {
@@ -63,6 +78,7 @@ class PageController {
         $data = '';
         $this->landingView = new V\landingPage('WebLayout');//Create the view
         $this->landingView->display($data);//Pass the data to View
+        $log->notice('Visited Landing Page');
       }
     }
 
@@ -79,6 +95,7 @@ class PageController {
         echo 'existing sheet name';
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($sheet);//Pass the data to View
+        $log->notice('Visited Edit Page');
       }
       else if($sheetCode->valid){
         if($sheetCode->code_type == "edit")
@@ -87,6 +104,7 @@ class PageController {
           $dataToPass = new M\Sheet($sheetName); //create a sheet object to pass to view
           $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
           $this->editSheetView->display($dataToPass);//Pass the data to View
+          $log->notice('Visited Edit Page');
         }
         else if($sheetCode->code_type == "read")
         {
@@ -94,6 +112,7 @@ class PageController {
           $dataToPass = new M\Sheet($sheetName); //create a sheet object to pass to view
           $this->readView = new V\readSheetPage('WebLayout');//Create the view
           $this->readView->display($dataToPass);//Pass the data to View
+          $log->notice('Visited Read Page');
         }
         else //file view
         {
@@ -111,12 +130,16 @@ class PageController {
         $dataToPass = new M\Sheet($inputString);
         $this->editSheetView = new V\editSheetPage('WebLayout');//Create the view
         $this->editSheetView->display($dataToPass);//Pass the data to View
+        $log->notice('Visited Edit Page');
+        //$log->warning('Foo');
+
       }
     }
     else{ //There was no user input pass an em
       $data = '';
       $this->landingView = new V\landingPage('WebLayout');//Create the view
       $this->landingView->display($data);//Pass the data to View
+      $log->notice('Visited Landing Page');
     }
     // $this->landingView = new V\landingPage('WebLayout');
     // $this->landingView->display($data);
