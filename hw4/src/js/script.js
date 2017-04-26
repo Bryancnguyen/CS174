@@ -381,8 +381,8 @@ function Spreadsheet(spreadsheet_id, supplied_data, model) {
             editSheet.draw();
         }
 
-        function loadReadSheet() {
-            var readSheet = new Spreadsheet('web-sheet-data', [["Tom", 5], ["Sally", 6]]);
+        function loadReadSheet(data, model) {
+            var readSheet = new Spreadsheet('web-sheet-data', data, model);
             readSheet.mode = 'read';
             readSheet.draw();
         }
