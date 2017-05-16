@@ -1,0 +1,50 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.title {
+margin: 0 auto;
+width: 400px;
+}
+
+#landing-form {
+    width: 400px;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.contains > input {
+   margin-left: 15px;
+}
+
+.contains, .message {
+    margin-top: 15px;
+}
+
+.invalidCreditCard, .invalidCVC {
+    color: red;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 5px;
+}
+
+.email-text, .current-email-text, .letknow-text {
+    width: 250px;
+}
+
+.status {
+    color: #FFD600;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.message-bold, .date {
+    margin: 0 auto;
+    width: 400px;
+}
+
+#message {
+    height: 200px;
+    width: 300px;
+}

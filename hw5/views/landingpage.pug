@@ -1,0 +1,62 @@
+doctype html
+html(ng-app='not-dead')
+  head
+    title Not-Dead-Yet...
+    link(rel='stylesheet', type='text/css', href='./styles.css')
+  body(ng-controller='mainController')
+    h1.title
+      a(href='/') Not-Dead-Yet...
+      br
+      | ...But letting people know
+      br
+      |         when the time comes.
+    form#landing-form(name='form')
+      .email-container.contains
+        label.email(for='email') Email:
+        input#email.email-text(ng-model='email', type='text', placeholder='Used to send checkin email', required='')
+      .cost-container.contains
+        label.cost(for='cost') Cost:
+        input#cost.cost-text(ng-model='cost', type='text', placeholder='$5', required='')
+      .credit-container.contains
+        label.creditcard(for='creditcard') Credit Card:
+        input#creditcard.creditcard-text(ng-model='creditcard', type='text', name='credit-card', required='number')
+        span.invalidCreditCard(ng-show='creditInvalid')
+          | Incorrect Credit Card Number Entered, Please Enter Valid 16 Digit Credit Card with no dashes or spaces
+      .cvc-container.contains
+        label.cvc(for='cvc') CVC:
+        input#cvc.cvc-text(ng-model='cvc', type='text', required='number')
+        span.invalidCVC(ng-show='cvcInvalid') Incorrect CVC entered, Please Enter Valid 3 digit CVC number
+      .expires-container.contains
+        label.expires(for='expires') Expires:
+        select(ng-model='expiry_month', ng-change='expiry=expiry_month+"/"+expiry_year', required='')
+          option(value='') Month
+          option(value='01') January
+          option(value='02') February
+          option(value='03') March
+          option(value='04') April
+          option(value='05') May
+          option(value='06') June
+          option(value='07') July
+          option(value='08') August
+          option(value='09') September
+          option(value='10') October
+          option(value='11') November
+          option(value='12') December
+        select(ng-model='expiry_year', ng-change='expiry=expiry_month+"/"+expiry_year', required='')
+          option(value='') Year
+          option(value='17') 2017
+          option(value='18') 2018
+          option(value='19') 2019
+          option(value='20') 2020
+      p
+        | Your card will be charged when you click the button below.
+        | A link will be mailed to you periodically
+        | that allows you to specify a message and who to send it
+        | to if you fail to check in
+      button(ng-click='buyPieceOfMind()', ng-disabled='form.$invalid') Buy a Piece-of-Mind
+      .status-container
+        span.status(ng-show='status') {{ message }}
+  script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js')
+  // load angular
+  script(type='text/javascript', src='https://js.stripe.com/v2/')
+  script(src='./my-app.js')

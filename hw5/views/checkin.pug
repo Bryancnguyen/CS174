@@ -1,0 +1,30 @@
+doctype html
+html(ng-app='not-dead')
+  head
+    title Not-Dead-Yet...
+    link(rel='stylesheet', type='text/css', href='./styles.css')
+  body(ng-controller='checkinController')
+    h1.title
+      a(href='/') Not-Dead-Yet...
+      br
+      | ...But time to check-in:
+      br
+      p {{currentEmail}}
+    .checkin-message-container.contains
+      .message-bold Your last check-in was:
+      p.date {{lastCheckin}}
+    form#landing-form(name='form', ng-controller="checkedController")
+      .current-container.contains
+        label.current-email(for='current-email') Current Email:
+        input#current-email.current-email-text(type='text', placeholder='Somerandom@gmail.com', ng-model="currentEmail")
+      .letknow-container.contains
+        label.letknow(for='letknow') Let-Know List:
+        input#letknow.letknow-text(type='text', placeholder='Comma seperated email', ng-model="letKnowList")
+      .message-label-container.contains
+        label.message(for='message') Message
+      .message-container.contains
+        textarea#message(ng-model="message")
+      button(ng-click='checkin()') Check-In
+      span.status(ng-show='checkedinStatus') You have checked in.
+  script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js')
+  script(src='./my-app.js')
